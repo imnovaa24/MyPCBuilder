@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PC Builder &amp; Compatibility Tool</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13a4ec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                        "surface-dark": "#1a2c35",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #101c22;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #233c48;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #13a4ec;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col">
+<!-- Header -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#233c48] bg-background-light dark:bg-[#111c22] px-10 py-3 shadow-sm">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">PC Master Builder</h2>
+</div>
+<div class="hidden lg:flex items-center gap-9">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Builder</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Saved Builds</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Compatibility Guide</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Forums</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<div class="hidden md:flex w-full max-w-xs items-center rounded-lg bg-slate-200 dark:bg-[#233c48] h-10 px-3">
+<span class="material-symbols-outlined text-slate-500 dark:text-[#92b7c9]">search</span>
+<input class="w-full bg-transparent border-none text-sm text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-[#92b7c9] focus:ring-0" placeholder="Search components..."/>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary text-white text-sm font-bold hover:bg-sky-600 transition-colors">
+                    Login
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-[1440px] mx-auto p-6 md:p-8 lg:p-10">
+<!-- Page Title Area -->
+<div class="mb-8">
+<h1 class="text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em] mb-2">Custom PC Configurator</h1>
+<p class="text-slate-500 dark:text-[#92b7c9] text-base md:text-lg">Select your components to check compatibility and estimate pricing.</p>
+</div>
+<div class="flex flex-col xl:flex-row gap-8 items-start">
+<!-- Left Column: Component Slots -->
+<div class="w-full xl:flex-1 flex flex-col gap-4">
+<!-- Component Item: CPU -->
+<div class="group flex flex-col sm:flex-row items-center gap-4 bg-white dark:bg-[#1a2c35] p-4 rounded-xl border border-slate-200 dark:border-[#233c48] hover:border-primary/50 dark:hover:border-primary/50 transition-all shadow-sm">
+<div class="flex items-center gap-4 w-full sm:w-auto">
+<div class="bg-slate-100 dark:bg-[#233c48] flex items-center justify-center rounded-lg size-16 shrink-0 relative overflow-hidden">
+<img alt="CPU" class="w-full h-full object-cover" data-alt="AMD Ryzen 5 Processor Box Art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzDsJ63fcLBQCDLFwfktNTz6AftVw_46uHmNZMELGFFTCfQOkJZCIjKckrIvRUbp-r-Vllr8q6ELJnIP2329f2xzIASKMDztmMLDj9RQDtXJtyNIyC-6omkjqhePPJwUK0FFCbYIcOzg8FnLXUVaG5HsdF2iisfgeRcfdbNgefT6ASvBlVu-oyjAoFnbFfcIWN57M30HCq3BFO5Fyvo0J6iyIUOIf32xInbmhTsmNS9e_HQNUIjbM5sLdeOHsVe4ryIh5wXYEIL6Oa"/>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary uppercase tracking-wider mb-1">CPU</span>
+<p class="text-slate-900 dark:text-white text-lg font-bold leading-tight line-clamp-1">AMD Ryzen 5 5600X</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center text-yellow-500 text-xs">
+<span class="material-symbols-outlined text-sm" style="font-size: 16px;">star</span>
+<span class="ml-0.5 font-medium">4.8</span>
+</span>
+<span class="text-slate-400 dark:text-slate-500 text-xs">•</span>
+<p class="text-slate-500 dark:text-[#92b7c9] text-sm font-medium">3.7M - 4.2M VNĐ</p>
+</div>
+</div>
+</div>
+<div class="ml-auto flex gap-3 w-full sm:w-auto mt-2 sm:mt-0">
+<button class="flex-1 sm:flex-none h-9 px-4 rounded-lg bg-slate-100 dark:bg-[#233c48] text-slate-700 dark:text-slate-200 text-sm font-semibold hover:bg-slate-200 dark:hover:bg-[#2d4b5a] transition-colors">Details</button>
+<button class="flex-1 sm:flex-none h-9 px-4 rounded-lg border border-slate-300 dark:border-[#233c48] text-slate-700 dark:text-slate-200 text-sm font-semibold hover:border-primary hover:text-primary transition-colors">Change</button>
+</div>
+</div>
+<!-- Component Item: Motherboard -->
+<div class="group flex flex-col sm:flex-row items-center gap-4 bg-white dark:bg-[#1a2c35] p-4 rounded-xl border border-slate-200 dark:border-[#233c48] hover:border-primary/50 dark:hover:border-primary/50 transition-all shadow-sm">
+<div class="flex items-center gap-4 w-full sm:w-auto">
+<div class="bg-slate-100 dark:bg-[#233c48] flex items-center justify-center rounded-lg size-16 shrink-0 relative overflow-hidden">
+<img alt="Motherboard" class="w-full h-full object-cover" data-alt="MSI Motherboard Box Art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlA86yESKlVGdE_MxBJpcmVMiwxcIuNq3QA9PEdNvkkji6Uzp-oMyQ32AvVlO_NXHszcxzCRq5hecQPb8oEKrzxZKimqjcUZC1FG2jSZGg4Yyvu2F3xdHxufnaRQxyG_nC_ku4R1Ti7YZiGIEbnTewJtgoXTUiebtcSTKfkKHdo_MX0eaLUieMSWjVb_J_mTrMoUndNL6cE1t6gM8PQwWTx--NAJMZzcFuxPzPjbLAjI_QS4dPEYIk20p-Ck48ecxfqnHj0TAoj8AU"/>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Motherboard</span>
+<p class="text-slate-900 dark:text-white text-lg font-bold leading-tight line-clamp-1">MSI MAG B550 Tomahawk</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center text-yellow-500 text-xs">
+<span class="material-symbols-outlined text-sm" style="font-size: 16px;">star</span>
+<span class="ml-0.5 font-medium">4.7</span>
+</span>
+<span class="text-slate-400 dark:text-slate-500 text-xs">•</span>
+<p class="text-slate-500 dark:text-[#92b7c9] text-sm font-medium">4.1M - 4.5M VNĐ</p>
+</div>
+</div>
+</div>
+<div class="ml-auto flex gap-3 w-full sm:w-auto mt-2 sm:mt-0">
+<button class="flex-1 sm:flex-none h-9 px-4 rounded-lg bg-slate-100 dark:bg-[#233c48] text-slate-700 dark:text-slate-200 text-sm font-semibold hover:bg-slate-200 dark:hover:bg-[#2d4b5a] transition-colors">Details</button>
+<button class="flex-1 sm:flex-none h-9 px-4 rounded-lg border border-slate-300 dark:border-[#233c48] text-slate-700 dark:text-slate-200 text-sm font-semibold hover:border-primary hover:text-primary transition-colors">Change</button>
+</div>
+</div>
+<!-- Component Item: GPU (Error State Visual Indicator) -->
+<div class="group flex flex-col sm:flex-row items-center gap-4 bg-white dark:bg-[#1a2c35] p-4 rounded-xl border border-red-500/50 hover:border-red-500 transition-all shadow-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-red-500"></div>
+<div class="flex items-center gap-4 w-full sm:w-auto">
+<div class="bg-slate-100 dark:bg-[#233c48] flex items-center justify-center rounded-lg size-16 shrink-0 relative overflow-hidden">
+<img alt="GPU" class="w-full h-full object-cover" data-alt="Nvidia RTX Graphics Card" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbi2tUN2IzmJrt1VIUDgZ_2QtmrIADqfoO7GbUoLTnEioyM9oyQgi1Wt-z_q8a66tF3Pwf4DVSD0q-z_yeGnFaQ8a_TOSFYkxTrmgtYLaygzeVy9RilZgRFCx3xmW7uDTfDvD8kqdVNRnv7SMyk0imh0QvA9DiSR0duBTOfVu8kwEAJfWqBewL_FzS1VqRa4aECp4k8CZh0_Ty6xDRE48cvlqwFgeqV87aPMEv6VNDgnreS2gmj8gkhaXRz04IIcky8yWWSrFJBkn1"/>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-xs font-bold text-primary uppercase tracking-wider">GPU</span>
+<span class="text-[10px] font-bold bg-red-500/10 text-red-500 px-1.5 py-0.5 rounded uppercase tracking-wide border border-red-500/20">Incompatible</span>
+</div>
+<p class="text-slate-900 dark:text-white text-lg font-bold leading-tight line-clamp-1">ASUS ROG Strix GeForce RTX 3080</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center text-yellow-500 text-xs">
+<span class="material-symbols-outlined text-sm" style="font-size: 16px;">star</span>
+<span class="ml-0.5 font-medium">4.9</span>
+</span>
+<span class="text-slate-400 dark:text-slate-500 text-xs">•</span>
+<p class="text-slate-500 dark:text-[#92b7c9] text-sm font-medium">18.5M - 20M VNĐ</p>
+</div>
+</div>
+</div>
+<div class="ml-auto flex gap-3 w-full sm:w-auto mt-2 sm:mt-0">
+<button class="flex-1 sm:flex-none h-9 px-4 rounded-lg bg-slate-100 dark:bg-[#233c48] text-slate-700 dark:text-slate-200 text-sm font-semibold hover:bg-slate-200 dark:hover:bg-[#2d4b5a] transition-colors">Details</button>
+<button class="flex-1 sm:flex-none h-9 px-4 rounded-lg border border-red-500/30 text-red-400 text-sm font-semibold hover:bg-red-500 hover:text-white transition-colors">Fix Issue</button>
+</div>
+</div>
+<!-- Component Item: RAM -->
+<div class="group flex flex-col sm:flex-row items-center gap-4 bg-white dark:bg-[#1a2c35] p-4 rounded-xl border border-slate-200 dark:border-[#233c48] hover:border-primary/50 dark:hover:border-primary/50 transition-all shadow-sm">
+<div class="flex items-center gap-4 w-full sm:w-auto">
+<div class="bg-slate-100 dark:bg-[#233c48] flex items-center justify-center rounded-lg size-16 shrink-0 relative overflow-hidden">
+<img alt="RAM" class="w-full h-full object-cover" data-alt="RGB RAM Stick" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA30-dJOvSr_s8A37D_Gq8FNS4lcnzKdF6LImW4Fx36AfpbMLaIKD1D9lqvF9v_QRKCsZXUANv6Ct-T3dV3d0RlTFdY0Ftweu8K49YXuD0inwnBgq_K85SrW7G-0rrccxvuZHoLNTAf6GjKpOISXwN88gaDVN_pd0075qi1elS2-k40GeOZWfB063aAKKcBXMjfwZaWf7mj6DnUpm5wh_3R5YlWQU7JAAIu1Bo5NMkX74_lb2Wd8Q8BPk3md8ZJe0SSMyKkd3Sz0bJw"/>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Memory</span>
+<p class="text-slate-900 dark:text-white text-lg font-bold leading-tight line-clamp-1">Corsair Vengeance RGB Pro 32GB (2x16GB)</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center text-yellow-500 text-xs">
+<span class="material-symbols-outlined text-sm" style="font-size: 16px;">star</span>
+<span class="ml-0.5 font-medium">4.8</span>
+</span>
+<span class="text-slate-400 dark:text-slate-500 text-xs">•</span>
+<p class="text-slate-500 dark:text-[#92b7c9] text-sm font-medium">2.2M - 2.5M VNĐ</p>
+</div>
+</div>
+</div>
+<div class="ml-auto flex gap-3 w-full sm:w-auto mt-2 sm:mt-0">
+<button class="flex-1 sm:flex-none h-9 px-4 rounded-lg bg-slate-100 dark:bg-[#233c48] text-slate-700 dark:text-slate-200 text-sm font-semibold hover:bg-slate-200 dark:hover:bg-[#2d4b5a] transition-colors">Details</button>
+<button class="flex-1 sm:flex-none h-9 px-4 rounded-lg border border-slate-300 dark:border-[#233c48] text-slate-700 dark:text-slate-200 text-sm font-semibold hover:border-primary hover:text-primary transition-colors">Change</button>
+</div>
+</div>
+<!-- Component Item: Storage -->
+<div class="group flex flex-col sm:flex-row items-center gap-4 bg-white dark:bg-[#1a2c35] p-4 rounded-xl border border-slate-200 dark:border-[#233c48] hover:border-primary/50 dark:hover:border-primary/50 transition-all shadow-sm">
+<div class="flex items-center gap-4 w-full sm:w-auto">
+<div class="bg-slate-100 dark:bg-[#233c48] flex items-center justify-center rounded-lg size-16 shrink-0 relative overflow-hidden">
+<img alt="SSD" class="w-full h-full object-cover" data-alt="M.2 NVMe SSD" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDx5Y__bq9_AmfeygdkbrdM6fMtf7qtPQg2UrRO2esDV__6edIYAkvvWIMljXizWtRjLXPlY610cSIu7YFXMH40vvUDMixoU_vROL9tPRs5veCwkHHQYnxQiMdNy2CtBxYHMG-Iv38k_EWu8DnIWtkti7vTJma87vY-3YfRjBcUx6QH1zIaaL-wK6Sm7yblpos_vPOE8CqXR7NDDBUrLtcsQlDa-3gntKbIjhce2H_hb0h5nSU7OI3xMuIGoGx4XoxpNUfqBWTFQYR"/>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary uppercase tracking-wider mb-1">Storage</span>
+<p class="text-slate-900 dark:text-white text-lg font-bold leading-tight line-clamp-1">Samsung 970 EVO Plus 1TB</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center text-yellow-500 text-xs">
+<span class="material-symbols-outlined text-sm" style="font-size: 16px;">star</span>
+<span class="ml-0.5 font-medium">4.9</span>
+</span>
+<span class="text-slate-400 dark:text-slate-500 text-xs">•</span>
+<p class="text-slate-500 dark:text-[#92b7c9] text-sm font-medium">1.5M - 1.8M VNĐ</p>
+</div>
+</div>
+</div>
+<div class="ml-auto flex gap-3 w-full sm:w-auto mt-2 sm:mt-0">
+<button class="flex-1 sm:flex-none h-9 px-4 rounded-lg bg-slate-100 dark:bg-[#233c48] text-slate-700 dark:text-slate-200 text-sm font-semibold hover:bg-slate-200 dark:hover:bg-[#2d4b5a] transition-colors">Details</button>
+<button class="flex-1 sm:flex-none h-9 px-4 rounded-lg border border-slate-300 dark:border-[#233c48] text-slate-700 dark:text-slate-200 text-sm font-semibold hover:border-primary hover:text-primary transition-colors">Change</button>
+</div>
+</div>
+<!-- Empty Slot Example -->
+<div class="group flex flex-col sm:flex-row items-center gap-4 bg-slate-50 dark:bg-[#111c22] p-4 rounded-xl border-2 border-dashed border-slate-200 dark:border-[#233c48] hover:border-primary/50 dark:hover:border-primary/50 hover:bg-slate-100 dark:hover:bg-[#1a2c35] transition-all cursor-pointer">
+<div class="flex items-center gap-4 w-full">
+<div class="bg-slate-200 dark:bg-[#1c2e36] flex items-center justify-center rounded-lg size-16 shrink-0 text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined text-3xl">add_circle</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">CPU Cooler</span>
+<p class="text-slate-500 dark:text-slate-400 text-lg font-medium">Select a cooler (Optional)</p>
+</div>
+<div class="ml-auto">
+<button class="h-9 px-4 rounded-lg bg-primary/10 text-primary text-sm font-semibold group-hover:bg-primary group-hover:text-white transition-colors">Add</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sticky Sidebar -->
+<div class="w-full xl:w-[400px] shrink-0 xl:sticky xl:top-24 flex flex-col gap-6">
+<!-- Build Health Check -->
+<div class="bg-white dark:bg-[#1a2c35] rounded-xl border border-slate-200 dark:border-[#233c48] shadow-lg overflow-hidden flex flex-col">
+<div class="p-5 border-b border-slate-200 dark:border-[#233c48] flex justify-between items-center bg-gradient-to-r from-[#1a2c35] to-[#131f25]">
+<h3 class="text-white text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">health_metrics</span>
+                            Build Health Check
+                        </h3>
+<span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">2 ISSUES</span>
+</div>
+<div class="p-5 flex flex-col gap-4">
+<!-- Critical Error -->
+<div class="bg-red-50 dark:bg-red-900/10 border-l-4 border-red-500 p-3 rounded-r-lg">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-red-500 mt-0.5">error</span>
+<div>
+<h4 class="text-red-700 dark:text-red-400 text-sm font-bold">Physical Constraint</h4>
+<p class="text-red-600 dark:text-red-300 text-sm mt-1 leading-relaxed">
+                                        GPU length (340mm) exceeds Case clearance limit (300mm).
+                                    </p>
+<button class="text-red-700 dark:text-red-400 text-xs font-bold underline mt-2 hover:text-red-500">Find compatible case</button>
+</div>
+</div>
+</div>
+<!-- Warning -->
+<div class="bg-yellow-50 dark:bg-yellow-900/10 border-l-4 border-yellow-500 p-3 rounded-r-lg">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-yellow-600 dark:text-yellow-500 mt-0.5">warning</span>
+<div>
+<h4 class="text-yellow-800 dark:text-yellow-500 text-sm font-bold">Power Headroom</h4>
+<p class="text-yellow-700 dark:text-yellow-400/90 text-sm mt-1 leading-relaxed">
+                                        450W PSU is close to 400W peak draw. Upgrade recommended.
+                                    </p>
+</div>
+</div>
+</div>
+<!-- Good Status -->
+<div class="flex items-center gap-3 p-2 text-green-600 dark:text-green-400 opacity-75">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="text-sm font-medium">Motherboard BIOS Compatible</span>
+</div>
+</div>
+</div>
+<!-- Budget Estimation -->
+<div class="bg-white dark:bg-[#1a2c35] rounded-xl border border-slate-200 dark:border-[#233c48] shadow-lg overflow-hidden">
+<div class="p-5 border-b border-slate-200 dark:border-[#233c48]">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">payments</span>
+                            Budget Estimation
+                        </h3>
+</div>
+<div class="p-6">
+<div class="flex flex-col gap-1 mb-6">
+<span class="text-slate-500 dark:text-[#92b7c9] text-sm font-medium">Estimated Total</span>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">30M</span>
+<span class="text-xl font-bold text-slate-900 dark:text-white">-</span>
+<span class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">33.5M</span>
+<span class="text-lg font-bold text-slate-500 dark:text-slate-400 ml-1">VNĐ</span>
+</div>
+<span class="text-xs text-slate-400 dark:text-slate-500 mt-1">*Prices are estimates based on various retailers.</span>
+</div>
+<div class="space-y-3">
+<button class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-sky-600 text-white font-bold h-12 rounded-lg transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">save</span>
+                                Save Build
+                            </button>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 bg-slate-100 dark:bg-[#233c48] hover:bg-slate-200 dark:hover:bg-[#2d4b5a] text-slate-900 dark:text-white font-bold h-10 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">share</span>
+                                    Share
+                                </button>
+<button class="flex items-center justify-center gap-2 bg-slate-100 dark:bg-[#233c48] hover:bg-slate-200 dark:hover:bg-[#2d4b5a] text-slate-900 dark:text-white font-bold h-10 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">print</span>
+                                    Print
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Ad/Promo Space or Mini Guide -->
+<div class="bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-xl p-5 border border-white/10 relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="text-slate-900 dark:text-white font-bold text-lg mb-2">Need Help?</h4>
+<p class="text-slate-700 dark:text-slate-300 text-sm mb-4">Our community experts can review your build for optimization.</p>
+<a class="inline-flex items-center text-primary font-bold text-sm hover:underline" href="#">
+                            Ask in Forums <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Footer -->
+<footer class="mt-auto border-t border-slate-200 dark:border-[#233c48] bg-background-light dark:bg-[#111c22] py-8 px-10">
+<div class="max-w-[960px] mx-auto text-center">
+<p class="text-slate-500 dark:text-[#92b7c9] text-sm">© 2023 PC Master Builder. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

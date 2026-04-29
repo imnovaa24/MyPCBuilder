@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart Component Selector Modal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#13a4ec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                        "surface-dark": "#1c2a33",
+                        "surface-darker": "#16232b",
+                        "border-dark": "#2a3b47",
+                    },
+                    fontFamily: {
+                        display: ["Space Grotesk", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better look in dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101c22; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a3b47; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374b5a; 
+        }
+        
+        /* Tooltip styling */
+        .tooltip-trigger:hover .tooltip-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-slate-100 font-display min-h-screen flex flex-col overflow-hidden">
+<!-- Modal Overlay Backdrop -->
+<div class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 flex items-center justify-center p-4 md:p-8">
+<!-- Modal Container -->
+<div class="relative w-full max-w-[1200px] h-[85vh] bg-surface-darker rounded-xl border border-border-dark shadow-2xl flex flex-col overflow-hidden">
+<!-- Header Section -->
+<div class="flex items-center justify-between px-6 py-4 border-b border-border-dark bg-surface-darker z-10">
+<div class="flex flex-col gap-1">
+<h2 class="text-2xl font-bold text-white tracking-tight">Select Processor (CPU)</h2>
+<div class="flex items-center gap-2 text-sm text-slate-400">
+<span class="material-symbols-outlined text-[16px]">link</span>
+<span>Filtering for compatibility with <span class="text-primary font-medium">ASUS ROG STRIX B650-A GAMING WIFI</span></span>
+</div>
+</div>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/5 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Main Content Area -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar Filters -->
+<div class="w-64 bg-background-dark border-r border-border-dark flex flex-col shrink-0 overflow-y-auto hidden md:flex">
+<div class="p-4 flex flex-col gap-6">
+<!-- Filter Group: Search -->
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Search</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 material-symbols-outlined text-[20px]">search</span>
+<input class="w-full bg-surface-dark border border-border-dark rounded-lg py-2 pl-10 pr-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Model name..." type="text"/>
+</div>
+</div>
+<!-- Filter Group: Categories -->
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Manufacturer</label>
+<div class="flex flex-col gap-1">
+<label class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-dark/50 hover:bg-surface-dark cursor-pointer transition-colors group">
+<input checked="" class="rounded border-border-dark bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span class="text-sm font-medium text-slate-300 group-hover:text-white">AMD</span>
+<span class="ml-auto text-xs text-slate-500">14</span>
+</label>
+<label class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-surface-dark cursor-pointer transition-colors group">
+<input class="rounded border-border-dark bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span class="text-sm font-medium text-slate-300 group-hover:text-white">Intel</span>
+<span class="ml-auto text-xs text-slate-500">28</span>
+</label>
+</div>
+</div>
+<!-- Filter Group: Series -->
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Series</label>
+<div class="flex flex-col gap-1">
+<label class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-surface-dark cursor-pointer transition-colors group">
+<input class="rounded border-border-dark bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span class="text-sm font-medium text-slate-300 group-hover:text-white">Ryzen 9</span>
+</label>
+<label class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-dark/50 hover:bg-surface-dark cursor-pointer transition-colors group">
+<input checked="" class="rounded border-border-dark bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span class="text-sm font-medium text-slate-300 group-hover:text-white">Ryzen 7</span>
+</label>
+<label class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-surface-dark cursor-pointer transition-colors group">
+<input class="rounded border-border-dark bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span class="text-sm font-medium text-slate-300 group-hover:text-white">Ryzen 5</span>
+</label>
+</div>
+</div>
+<!-- Filter Group: Specs -->
+<div class="flex flex-col gap-4 pt-4 border-t border-border-dark">
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Cores</label>
+<div class="flex gap-2 flex-wrap">
+<button class="px-3 py-1.5 rounded bg-surface-dark border border-border-dark text-xs text-slate-300 hover:border-primary hover:text-white transition-colors">6</button>
+<button class="px-3 py-1.5 rounded bg-primary text-white border border-primary text-xs font-medium">8</button>
+<button class="px-3 py-1.5 rounded bg-surface-dark border border-border-dark text-xs text-slate-300 hover:border-primary hover:text-white transition-colors">12</button>
+<button class="px-3 py-1.5 rounded bg-surface-dark border border-border-dark text-xs text-slate-300 hover:border-primary hover:text-white transition-colors">16</button>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">TDP</label>
+<input class="w-full h-1 bg-surface-dark rounded-lg appearance-none cursor-pointer accent-primary" type="range"/>
+<div class="flex justify-between text-xs text-slate-500">
+<span>65W</span>
+<span>170W</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Product List -->
+<div class="flex-1 flex flex-col bg-surface-darker overflow-hidden">
+<!-- Active Filters Bar -->
+<div class="px-6 py-3 border-b border-border-dark bg-background-dark/50 flex gap-2 items-center flex-wrap overflow-x-auto whitespace-nowrap scrollbar-hide">
+<span class="text-xs font-medium text-slate-500 uppercase mr-2">Active Filters:</span>
+<div class="flex items-center gap-1 pl-2 pr-1 py-1 rounded bg-surface-dark border border-border-dark text-xs text-white">
+<span>Manufacturer: AMD</span>
+<button class="hover:text-red-400"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+<div class="flex items-center gap-1 pl-2 pr-1 py-1 rounded bg-surface-dark border border-border-dark text-xs text-white">
+<span>Socket: AM5</span>
+<button class="hover:text-red-400"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+<div class="flex items-center gap-1 pl-2 pr-1 py-1 rounded bg-surface-dark border border-border-dark text-xs text-white">
+<span>Cores: 8</span>
+<button class="hover:text-red-400"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</div>
+<button class="text-xs text-primary hover:text-primary/80 ml-auto font-medium">Clear All</button>
+</div>
+<!-- List Items -->
+<div class="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
+<!-- Item 1: Active/Compatible -->
+<div class="group flex flex-col md:flex-row gap-4 p-4 rounded-xl bg-surface-dark border border-border-dark hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/5">
+<div class="shrink-0">
+<div class="w-full md:w-[100px] aspect-square rounded-lg bg-white p-2 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-contain" data-alt="Close up of a computer processor chip" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY22aF309U5K7O51hwkn-jUZwnbp49jfzLcmphf4izLq3sZVqu5HnoU9s_-GEKdZwRO9O5UNghwao--8ydFX8Gq07BdOg6wAs5mr129sZoyNCcKxU1zvsnTXvqdvRTIG4R-bitnqWpRqGQwWoDSOdfJmkjvagjFWqvGhqq9W-7A1sqWX64AWvxHKN7nONb13MMpYToIzE4b_gAZg0Lwq2QAQKfu9M3X_5fFOjtaIBUBznBxd4-S-JpD4Ahly2cYQlDSTq1t6CHTYmJ"/>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between gap-2">
+<div>
+<div class="flex items-start justify-between">
+<h3 class="text-lg font-bold text-white group-hover:text-primary transition-colors">AMD Ryzen 7 7800X3D</h3>
+<div class="flex items-center gap-1 text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded text-xs font-medium border border-emerald-400/20">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                            Compatible
+                                        </div>
+</div>
+<div class="flex flex-wrap gap-y-1 gap-x-4 mt-2 text-sm text-slate-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">speed</span> 4.2 GHz Base
+                                        </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">memory</span> 8 Cores / 16 Threads
+                                        </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">bolt</span> 120W TDP
+                                        </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">grid_view</span> AM5 Socket
+                                        </div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-white/5">
+<div class="text-xl font-bold text-white">$369.00</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                                        Add to Build
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Item 2: Active/Compatible -->
+<div class="group flex flex-col md:flex-row gap-4 p-4 rounded-xl bg-surface-dark border border-border-dark hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/5">
+<div class="shrink-0">
+<div class="w-full md:w-[100px] aspect-square rounded-lg bg-white p-2 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-contain" data-alt="Generic computer chip visualization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2Nv5FUM6XCWWrbZXteJBZg3JWQLXRnihRJegt-cE-tbTxdvquwmBmEjdUTUJ0GdoFpnOT89foJWe6jsR0nIIdp0tiZcomQ-JyJ2g18I-oKwTdNVHfkwsJn3w-MFjxkk9yaGdfnH66H8vhk1YH7mHcpfbzasRRiSmHiqf23H87EJS1CaywoWp1QTWgtsXGUpqvtyrFzdazRa2hXKhcoKU-bAo92Sx6oCWpI5IhxkjlVEFQiWekJg5fL8kPfBMu9914fRczPm1Zhw8R"/>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between gap-2">
+<div>
+<div class="flex items-start justify-between">
+<h3 class="text-lg font-bold text-white group-hover:text-primary transition-colors">AMD Ryzen 9 7950X</h3>
+<div class="flex items-center gap-1 text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded text-xs font-medium border border-emerald-400/20">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                            Compatible
+                                        </div>
+</div>
+<div class="flex flex-wrap gap-y-1 gap-x-4 mt-2 text-sm text-slate-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">speed</span> 4.5 GHz Base
+                                        </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">memory</span> 16 Cores / 32 Threads
+                                        </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">bolt</span> 170W TDP
+                                        </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">grid_view</span> AM5 Socket
+                                        </div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-white/5 border-t">
+<div class="text-xl font-bold text-white">$599.00</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                                        Add to Build
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Item 3: Disabled/Incompatible -->
+<div class="relative tooltip-trigger group flex flex-col md:flex-row gap-4 p-4 rounded-xl bg-background-dark/30 border border-border-dark opacity-60 hover:opacity-100 transition-opacity select-none cursor-not-allowed grayscale-[0.8] hover:grayscale-[0.5]">
+<!-- Incompatible Tooltip -->
+<div class="tooltip-content invisible opacity-0 absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-xs z-50 transition-all duration-200 transform translate-y-2 pointer-events-none">
+<div class="bg-red-900/90 backdrop-blur text-white text-xs p-3 rounded-lg shadow-xl border border-red-700/50 flex items-start gap-2">
+<span class="material-symbols-outlined text-red-300 text-[18px] shrink-0">error</span>
+<div>
+<p class="font-bold text-red-200">Incompatible Component</p>
+<p class="text-red-100/80 mt-1">Socket LGA1700 does not match your AM5 motherboard.</p>
+</div>
+</div>
+<!-- Arrow -->
+<div class="w-3 h-3 bg-red-900/90 rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1.5 border-r border-b border-red-700/50"></div>
+</div>
+<div class="shrink-0 relative">
+<div class="w-full md:w-[100px] aspect-square rounded-lg bg-slate-800 p-2 flex items-center justify-center overflow-hidden opacity-50">
+<img class="w-full h-full object-contain mix-blend-luminosity" data-alt="Close up of CPU socket" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRsoDuak1kMfiF6Vu1Cxu2o0CSsgzQQ3UbyZmxq97zBA8m71vZH2f0M0aO83HHrlZj33aqonwrtMU0pW-Wopxx7VpNtbxTqdaUy8_8Ns8ubvUSBVPYlBhHNedBXdGkSFL5vVoPmUw3cGl1UOdzYVNcTFW7Mm7RUQt2DzldMhNu0CaiThLPvdrhnyxgKmpk310iC3I1OGva2GBq1-vniRqaRKLBbn1QS2viJ3QbqUYdhCwx43YMf75V_M-hF9T6XgLwVVtRVuXLxdD5"/>
+</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-200 text-4xl drop-shadow-lg">lock</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between gap-2">
+<div>
+<div class="flex items-start justify-between">
+<h3 class="text-lg font-bold text-slate-400">Intel Core i9-13900K</h3>
+<div class="flex items-center gap-1 text-red-400 bg-red-400/10 px-2 py-0.5 rounded text-xs font-medium border border-red-400/20">
+<span class="material-symbols-outlined text-[14px]">block</span>
+                                            Incompatible
+                                        </div>
+</div>
+<div class="flex flex-wrap gap-y-1 gap-x-4 mt-2 text-sm text-slate-500">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">speed</span> 3.0 GHz Base
+                                        </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">memory</span> 24 Cores
+                                        </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">bolt</span> 125W TDP
+                                        </div>
+<div class="flex items-center gap-1 text-red-400 font-medium">
+<span class="material-symbols-outlined text-[16px]">warning</span> LGA1700 Socket
+                                        </div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-white/5 border-t">
+<div class="text-xl font-bold text-slate-500">$569.00</div>
+<button class="bg-surface-dark text-slate-500 px-6 py-2 rounded-lg text-sm font-medium border border-border-dark cursor-not-allowed flex items-center gap-2" disabled="">
+<span>Select</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 4: Disabled/Incompatible -->
+<div class="relative tooltip-trigger group flex flex-col md:flex-row gap-4 p-4 rounded-xl bg-background-dark/30 border border-border-dark opacity-60 hover:opacity-100 transition-opacity select-none cursor-not-allowed grayscale-[0.8] hover:grayscale-[0.5]">
+<!-- Incompatible Tooltip -->
+<div class="tooltip-content invisible opacity-0 absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-xs z-50 transition-all duration-200 transform translate-y-2 pointer-events-none">
+<div class="bg-red-900/90 backdrop-blur text-white text-xs p-3 rounded-lg shadow-xl border border-red-700/50 flex items-start gap-2">
+<span class="material-symbols-outlined text-red-300 text-[18px] shrink-0">error</span>
+<div>
+<p class="font-bold text-red-200">Incompatible Component</p>
+<p class="text-red-100/80 mt-1">Socket AM4 does not match your AM5 motherboard.</p>
+</div>
+</div>
+<!-- Arrow -->
+<div class="w-3 h-3 bg-red-900/90 rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1.5 border-r border-b border-red-700/50"></div>
+</div>
+<div class="shrink-0 relative">
+<div class="w-full md:w-[100px] aspect-square rounded-lg bg-slate-800 p-2 flex items-center justify-center overflow-hidden opacity-50">
+<img class="w-full h-full object-contain mix-blend-luminosity" data-alt="Circuit board pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcRpivfK0iYZ7JTmdeC0fCUR_m5JQZloBQ7zInkoJ6vxmbp0NobiLrWsDJaLFdVKgVj2uIDA8yj14j6S729uMdtb47Tyn9ttqQ7JBBIWBFFgqYE6oLLqmD9GHD3y7w-7s8mV5wrSkNO0ZTdrd73yID8h82QvG93Hps2DcW0V0sA8oNYaMOQ-_nhC7UAUWb3Y4vZvcGn881FAZALQny9UUtIl5EkCN0BKaSSW8zfG1P1xrlTpdwzGE7678D-KFs3Tlf12MwQbv4PIUQ"/>
+</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-200 text-4xl drop-shadow-lg">lock</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-between gap-2">
+<div>
+<div class="flex items-start justify-between">
+<h3 class="text-lg font-bold text-slate-400">AMD Ryzen 7 5800X3D</h3>
+<div class="flex items-center gap-1 text-red-400 bg-red-400/10 px-2 py-0.5 rounded text-xs font-medium border border-red-400/20">
+<span class="material-symbols-outlined text-[14px]">block</span>
+                                            Incompatible
+                                        </div>
+</div>
+<div class="flex flex-wrap gap-y-1 gap-x-4 mt-2 text-sm text-slate-500">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">speed</span> 3.4 GHz Base
+                                        </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">memory</span> 8 Cores / 16 Threads
+                                        </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">bolt</span> 105W TDP
+                                        </div>
+<div class="flex items-center gap-1 text-red-400 font-medium">
+<span class="material-symbols-outlined text-[16px]">warning</span> AM4 Socket
+                                        </div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-white/5 border-t">
+<div class="text-xl font-bold text-slate-500">$320.00</div>
+<button class="bg-surface-dark text-slate-500 px-6 py-2 rounded-lg text-sm font-medium border border-border-dark cursor-not-allowed flex items-center gap-2" disabled="">
+<span>Select</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer / Action Bar -->
+<div class="p-4 border-t border-border-dark bg-surface-darker flex justify-between items-center text-sm text-slate-400 z-10">
+<div class="hidden sm:flex items-center gap-4">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Compatible</span>
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500"></span> Incompatible</span>
+</div>
+<div class="flex gap-3 ml-auto">
+<button class="px-6 py-2.5 rounded-lg border border-border-dark bg-surface-dark text-slate-200 font-medium hover:bg-background-light hover:text-slate-900 transition-colors">Cancel</button>
+<button class="px-6 py-2.5 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">Confirm Selection</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

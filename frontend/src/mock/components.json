@@ -1,0 +1,166 @@
+[
+  {
+    "id": 1,
+    "category_code": "cpu",
+    "brand": "AMD",
+    "name": "Ryzen 5 7600",
+    "price": 5290000,
+    "specifications": {
+      "socket": "AM5",
+      "tdp": 65,
+      "cores": 6,
+      "threads": 12
+    }
+  },
+  {
+    "id": 2,
+    "category_code": "cpu",
+    "brand": "Intel",
+    "name": "Core i5-14400F",
+    "price": 5590000,
+    "specifications": {
+      "socket": "LGA1700",
+      "tdp": 65,
+      "cores": 10,
+      "threads": 16
+    }
+  },
+  {
+    "id": 3,
+    "category_code": "mainboard",
+    "brand": "MSI",
+    "name": "PRO B650M-A WIFI",
+    "price": 4290000,
+    "specifications": {
+      "socket": "AM5",
+      "ram_type": "DDR5",
+      "form_factor": "mATX"
+    }
+  },
+  {
+    "id": 4,
+    "category_code": "mainboard",
+    "brand": "ASUS",
+    "name": "TUF GAMING B760M-PLUS WIFI",
+    "price": 3990000,
+    "specifications": {
+      "socket": "LGA1700",
+      "ram_type": "DDR5",
+      "form_factor": "mATX"
+    }
+  },
+  {
+    "id": 5,
+    "category_code": "ram",
+    "brand": "Kingston",
+    "name": "Fury Beast 32GB DDR5 6000",
+    "price": 2790000,
+    "specifications": {
+      "ram_type": "DDR5",
+      "capacity": "32GB",
+      "speed": "6000MT/s"
+    }
+  },
+  {
+    "id": 6,
+    "category_code": "ram",
+    "brand": "Corsair",
+    "name": "Vengeance 32GB DDR4 3600",
+    "price": 1890000,
+    "specifications": {
+      "ram_type": "DDR4",
+      "capacity": "32GB",
+      "speed": "3600MT/s"
+    }
+  },
+  {
+    "id": 7,
+    "category_code": "vga",
+    "brand": "NVIDIA",
+    "name": "GeForce RTX 4070 Super",
+    "price": 17990000,
+    "specifications": {
+      "tdp": 220,
+      "length": 300,
+      "vram": "12GB"
+    }
+  },
+  {
+    "id": 8,
+    "category_code": "vga",
+    "brand": "AMD",
+    "name": "Radeon RX 7800 XT",
+    "price": 16490000,
+    "specifications": {
+      "tdp": 263,
+      "length": 315,
+      "vram": "16GB"
+    }
+  },
+  {
+    "id": 9,
+    "category_code": "case",
+    "brand": "Lian Li",
+    "name": "Lancool 216",
+    "price": 2290000,
+    "specifications": {
+      "max_gpu_length": 392,
+      "form_factor": "ATX"
+    }
+  },
+  {
+    "id": 10,
+    "category_code": "case",
+    "brand": "Montech",
+    "name": "Air 100 ARGB",
+    "price": 1490000,
+    "specifications": {
+      "max_gpu_length": 330,
+      "form_factor": "mATX"
+    }
+  },
+  {
+    "id": 11,
+    "category_code": "psu",
+    "brand": "Corsair",
+    "name": "RM750e",
+    "price": 2590000,
+    "specifications": {
+      "wattage": 750,
+      "efficiency": "80+ Gold"
+    }
+  },
+  {
+    "id": 12,
+    "category_code": "psu",
+    "brand": "Cooler Master",
+    "name": "MWE Bronze V2 650",
+    "price": 1590000,
+    "specifications": {
+      "wattage": 650,
+      "efficiency": "80+ Bronze"
+    }
+  },
+  {
+    "id": 13,
+    "category_code": "cooler",
+    "brand": "DeepCool",
+    "name": "AK400",
+    "price": 790000,
+    "specifications": {
+      "socket_support": ["AM5", "LGA1700"],
+      "type": "Air Cooler"
+    }
+  },
+  {
+    "id": 14,
+    "category_code": "cooler",
+    "brand": "Thermalright",
+    "name": "Peerless Assassin 120 SE",
+    "price": 1090000,
+    "specifications": {
+      "socket_support": ["AM5", "LGA1700"],
+      "type": "Air Cooler"
+    }
+  }
+]

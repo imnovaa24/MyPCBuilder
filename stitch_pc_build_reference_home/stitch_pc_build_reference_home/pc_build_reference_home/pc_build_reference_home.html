@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PC Build Reference Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13a4ec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                        "surface-dark": "#192b33",
+                        "surface-dark-hover": "#233c48",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+<div class="relative flex min-h-screen w-full flex-col group/design-root">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Navbar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-surface-dark-hover bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 py-3 lg:px-10">
+<div class="flex items-center gap-4 lg:gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-6 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">PC Builder Pro</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Build Guides</a>
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Parts Picker</a>
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Community</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 lg:gap-8">
+<label class="hidden sm:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-slate-200 dark:border-surface-dark-hover bg-white dark:bg-surface-dark-hover overflow-hidden">
+<div class="text-slate-500 dark:text-[#92b7c9] flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-slate-400 dark:placeholder:text-[#92b7c9] px-3 text-sm font-normal leading-normal" placeholder="Search components..." value=""/>
+</div>
+</label>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Start Building</span>
+</button>
+<button class="lg:hidden text-slate-900 dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="flex flex-1 flex-col items-center px-4 py-8 lg:px-40">
+<div class="flex flex-col max-w-[1200px] w-full gap-12">
+<!-- Hero Section -->
+<div class="@container">
+<div class="flex flex-col gap-8 py-6 @[864px]:flex-row @[864px]:items-center">
+<div class="w-full aspect-video rounded-xl bg-center bg-cover shadow-2xl overflow-hidden @[864px]:w-1/2 order-1 @[864px]:order-2 relative group" data-alt="Futuristic custom PC build with RGB lighting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBMVA7Fi-YU-VgmbcRbRMjVTIU-MZsKDkepV1eNuEqxeLvQw91TcAwdmUj-Dbhhh2SBC8Y6QmL19_CJ5svNJOfHbo90U3OYhTkwLgy-d0rnGKIMB8zbf9LE0iPksvGQ0qOQ4g2TGQ1nV3k6oVuXxSD0rxLJRw_F_-qQ-2yxsByD2w5x1edMJC0uE6C_LmoR2e896FRxsOu-D7IjFUlxKmjQp2ItdzyOmPTM3SC_67DVWSf6i1KlFPvT-T7JVEI82rnUA5GzE5shbCQV");'>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 to-transparent opacity-60"></div>
+</div>
+<div class="flex flex-col gap-6 @[864px]:w-1/2 order-2 @[864px]:order-1">
+<div class="flex flex-col gap-4 text-left">
+<h1 class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl lg:text-6xl">
+                                        Build Your First <span class="text-primary">Custom PC</span> Today
+                                    </h1>
+<p class="text-slate-600 dark:text-slate-300 text-base font-normal leading-relaxed lg:text-lg max-w-lg">
+                                        Explore expert-curated builds, compare prices in real-time, and join a community of builders. Whether it's for 4K gaming, video editing, or office work, we guide you every step of the way.
+                                    </p>
+</div>
+<div class="flex flex-wrap gap-4">
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-primary hover:bg-primary/90 text-white text-base font-bold transition-all shadow-lg shadow-primary/25">
+<span class="mr-2 material-symbols-outlined text-[20px]">build</span>
+<span>Start Building</span>
+</button>
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-slate-200 dark:bg-surface-dark-hover hover:bg-slate-300 dark:hover:bg-[#2c4b5a] text-slate-900 dark:text-white text-base font-bold transition-all">
+<span class="mr-2 material-symbols-outlined text-[20px]">library_books</span>
+<span>Browse Guides</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Popular Configurations Section -->
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<h2 class="text-slate-900 dark:text-white text-[28px] font-bold leading-tight tracking-[-0.015em]">Popular Configurations</h2>
+<a class="text-primary hover:text-primary/80 font-medium text-sm flex items-center" href="#">
+                                View all builds <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1: Entry Level -->
+<div class="flex flex-col rounded-xl overflow-hidden bg-white dark:bg-surface-dark shadow-md hover:shadow-xl transition-all border border-slate-200 dark:border-surface-dark-hover group">
+<div class="w-full aspect-[4/3] bg-cover bg-center relative" data-alt="Minimalist desktop setup with keyboard and monitor" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBmEdO-aI08D8ZblWFWxZ4PCpeTs4t9sAeFX1iRkqgh_PZV2wgc6IoooTBgEnuR8nxSFWCMKpii3x2Wc1Kpuox2rjAMt0I6QKawrlg1_DXOyaBFZTdyGl_gc3ew0qaS4ayAivZ24c94gLfrA0Tap0KpUlRMPUVFvPe5ODZ3apESKiUEtTGQuHdyOX7seC8U1UlY5KldEdiH8xgcICzZXSeuIX1DZlHhKl2s36DFVugGDEVbQAC0QT9WO310eJUNWJMJ_ivDXkPurJcB");'>
+<div class="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-yellow-400">star</span>
+                                        4.8
+                                    </div>
+<div class="absolute bottom-3 left-3 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                        Gaming
+                                    </div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Starter Gaming Build</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">1080p Ultra Settings</p>
+</div>
+<div class="text-right">
+<p class="text-slate-900 dark:text-white font-bold text-lg">$750</p>
+<p class="text-xs text-slate-500">Est. Total</p>
+</div>
+</div>
+<div class="h-px bg-slate-200 dark:bg-surface-dark-hover w-full"></div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[18px]">memory</span>
+<span>Ryzen 5 5600</span>
+</div>
+<span class="text-slate-400 text-xs">CPU</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[18px]">videogame_asset</span>
+<span>Radeon RX 6600</span>
+</div>
+<span class="text-slate-400 text-xs">GPU</span>
+</div>
+</div>
+<button class="mt-auto w-full py-2.5 rounded-lg bg-slate-100 dark:bg-surface-dark-hover hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white text-slate-700 dark:text-slate-300 text-sm font-semibold transition-colors flex items-center justify-center gap-2 group-hover:bg-primary group-hover:text-white">
+                                        View Parts List
+                                    </button>
+</div>
+</div>
+<!-- Card 2: Mid Range -->
+<div class="flex flex-col rounded-xl overflow-hidden bg-white dark:bg-surface-dark shadow-md hover:shadow-xl transition-all border border-slate-200 dark:border-surface-dark-hover group">
+<div class="w-full aspect-[4/3] bg-cover bg-center relative" data-alt="High performance PC with glass side panel and internal lighting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAv128iGVgmIdlQcT-zU1wHxTWWsF--3I_YNa4VAheUtac4LB1WoHpgL32psznaI70sHx2M8HhcHOMEprYG9CNxtTGMPUlidbJasMfIEgtA0l15HDKXnTaPi-zR70FC4Zbd9vXYp7T0FN_enKvsCMcTQx_QN2hYyX9issenSwAk-dZnjTQKqqIUQvEE5bR1YRlrV9UIDqnwDykws1e7FCtnOCKU-5eOKk7zKf3BFuCSlPyVcHoD-feQk6lFSjKWKBPLLMBQ8QmbP-j_");'>
+<div class="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-yellow-400">star</span>
+                                        4.9
+                                    </div>
+<div class="absolute bottom-3 left-3 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                        Performance
+                                    </div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">1440p Powerhouse</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">High FPS Gaming &amp; Streaming</p>
+</div>
+<div class="text-right">
+<p class="text-slate-900 dark:text-white font-bold text-lg">$1,450</p>
+<p class="text-xs text-slate-500">Est. Total</p>
+</div>
+</div>
+<div class="h-px bg-slate-200 dark:bg-surface-dark-hover w-full"></div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[18px]">memory</span>
+<span>Intel Core i5-13600K</span>
+</div>
+<span class="text-slate-400 text-xs">CPU</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[18px]">videogame_asset</span>
+<span>RTX 4070 Super</span>
+</div>
+<span class="text-slate-400 text-xs">GPU</span>
+</div>
+</div>
+<button class="mt-auto w-full py-2.5 rounded-lg bg-slate-100 dark:bg-surface-dark-hover hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white text-slate-700 dark:text-slate-300 text-sm font-semibold transition-colors flex items-center justify-center gap-2 group-hover:bg-primary group-hover:text-white">
+                                        View Parts List
+                                    </button>
+</div>
+</div>
+<!-- Card 3: Workstation -->
+<div class="flex flex-col rounded-xl overflow-hidden bg-white dark:bg-surface-dark shadow-md hover:shadow-xl transition-all border border-slate-200 dark:border-surface-dark-hover group">
+<div class="w-full aspect-[4/3] bg-cover bg-center relative" data-alt="Clean desk setup with dual monitors for productivity" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCx8gjVfOzFPP1SIez46FXGhRv7VD1UIpfsWvdU5y-aikw4RgKjsMkDshJFlNKFweZMwKF6J-g5cv2kHbKxwR_f1s3PbOJxFllnwY4RcqGsTrn9ucglyWS0fXAC84hUao75cMNBMLYPmT_i2LlR567403DYs3ds-VLx_m06sIE7pCcts4D1ID-sfE8PM-oej_Pi6iiLeI8BydjdKG_Ea2eynzumuyhL_ZGpo5_Kgu3Cv7elS070foUlwD1B8Eyg4hao67njDyjqW5RQ");'>
+<div class="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-yellow-400">star</span>
+                                        5.0
+                                    </div>
+<div class="absolute bottom-3 left-3 bg-teal-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                        Workstation
+                                    </div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Creator Pro</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Video Editing &amp; 3D Render</p>
+</div>
+<div class="text-right">
+<p class="text-slate-900 dark:text-white font-bold text-lg">$2,200</p>
+<p class="text-xs text-slate-500">Est. Total</p>
+</div>
+</div>
+<div class="h-px bg-slate-200 dark:bg-surface-dark-hover w-full"></div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[18px]">memory</span>
+<span>Ryzen 9 7950X</span>
+</div>
+<span class="text-slate-400 text-xs">CPU</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[18px]">videogame_asset</span>
+<span>RTX 4080</span>
+</div>
+<span class="text-slate-400 text-xs">GPU</span>
+</div>
+</div>
+<button class="mt-auto w-full py-2.5 rounded-lg bg-slate-100 dark:bg-surface-dark-hover hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white text-slate-700 dark:text-slate-300 text-sm font-semibold transition-colors flex items-center justify-center gap-2 group-hover:bg-primary group-hover:text-white">
+                                        View Parts List
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Additional Categories Grid -->
+<div class="py-10">
+<h2 class="text-slate-900 dark:text-white text-[24px] font-bold leading-tight mb-6">Browse by Component</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<a class="group flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-hover hover:border-primary dark:hover:border-primary transition-all" href="#">
+<span class="material-symbols-outlined text-4xl text-slate-400 group-hover:text-primary transition-colors">memory</span>
+<span class="text-slate-700 dark:text-slate-200 font-medium">CPUs</span>
+</a>
+<a class="group flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-hover hover:border-primary dark:hover:border-primary transition-all" href="#">
+<span class="material-symbols-outlined text-4xl text-slate-400 group-hover:text-primary transition-colors">videogame_asset</span>
+<span class="text-slate-700 dark:text-slate-200 font-medium">GPUs</span>
+</a>
+<a class="group flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-hover hover:border-primary dark:hover:border-primary transition-all" href="#">
+<span class="material-symbols-outlined text-4xl text-slate-400 group-hover:text-primary transition-colors">developer_board</span>
+<span class="text-slate-700 dark:text-slate-200 font-medium">Motherboards</span>
+</a>
+<a class="group flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-hover hover:border-primary dark:hover:border-primary transition-all" href="#">
+<span class="material-symbols-outlined text-4xl text-slate-400 group-hover:text-primary transition-colors">hard_drive</span>
+<span class="text-slate-700 dark:text-slate-200 font-medium">Storage</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

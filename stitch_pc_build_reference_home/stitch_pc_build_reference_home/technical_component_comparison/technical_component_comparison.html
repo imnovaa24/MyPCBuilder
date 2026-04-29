@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TechCompare - Component Showdown</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13a4ec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                        "surface-dark": "#192b33",
+                        "surface-light": "#ffffff",
+                        "border-dark": "#233c48",
+                        "text-secondary": "#92b7c9",
+                        "success": "#22c55e",
+                        "danger": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "sans": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-border-dark bg-white/80 dark:bg-background-dark/95 backdrop-blur-md px-4 md:px-10 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-primary">
+<div class="size-8 flex items-center justify-center bg-primary/20 rounded-lg">
+<span class="material-symbols-outlined text-primary">compare_arrows</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">TechCompare</h2>
+</div>
+<div class="hidden md:flex items-center gap-9">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Builds</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Components</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Laptops</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium leading-normal transition-colors" href="#">Community</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-4 md:gap-8">
+<label class="hidden sm:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-slate-200 dark:border-border-dark bg-slate-50 dark:bg-surface-dark focus-within:border-primary transition-colors">
+<div class="text-slate-400 dark:text-text-secondary flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-transparent text-slate-900 dark:text-white focus:outline-0 border-none h-full placeholder:text-slate-400 dark:placeholder:text-text-secondary px-3 text-sm font-normal leading-normal" placeholder="Search components..."/>
+</div>
+</label>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Log In</span>
+</button>
+</div>
+</header>
+<main class="flex-1 w-full max-w-[1200px] mx-auto px-4 md:px-6 py-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2 py-1 bg-surface-dark rounded text-xs text-text-secondary uppercase font-bold tracking-wider border border-border-dark">GPU Battle</span>
+<span class="text-text-secondary text-sm">Last updated: Oct 24, 2023</span>
+</div>
+<h1 class="text-3xl md:text-5xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
+<span class="text-green-500">NVIDIA</span> GeForce RTX 4070 <span class="text-slate-400 mx-2 text-2xl font-light">vs</span> <span class="text-red-500">AMD</span> Radeon RX 7800 XT
+                </h1>
+<p class="text-slate-500 dark:text-text-secondary text-lg max-w-2xl">
+                    A comprehensive head-to-head analysis of price, performance, and thermal efficiency for 1440p gaming.
+                </p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-dark border border-border-dark hover:bg-border-dark transition text-white text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">share</span> Share
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">bookmark</span> Save
+                </button>
+</div>
+</div>
+<!-- Product Visuals -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+<!-- Card 1 -->
+<div class="group relative overflow-hidden rounded-xl bg-surface-dark border border-border-dark hover:border-green-500/50 transition-all duration-300">
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent z-10"></div>
+<div class="h-64 bg-cover bg-center flex items-center justify-center p-8" style="background-image: radial-gradient(circle at center, #192b33 0%, #101c22 100%);">
+<img alt="NVIDIA GeForce RTX 4070 GPU render" class="max-h-full object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500" data-alt="Nvidia RTX 4070 Graphics Card" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCegoHau212DAYTA-zHIE-LK8K5k_PLMU7Agd-kQiCVN5UMT6oBYr0pwCVsqLhIbGvtEU5TPFcOWisWgJOPnz5UKy1-kEpjIKqWO0dklCysLD00ZL_AUrRvumKFAVYA9t558cQWoi-DdODYVLE2LWk0JzZL28KHx0a1YSFmSvhFp3a5Fy24nlujDIHDwNowczIfCdU3HdHkJQrTpXEzv9rLbJjTnbRwCdwJPmwk16OWVMAQMVcBN21_JTrRQE7FQau_8XviFPFEhKQ3"/>
+</div>
+<div class="relative z-20 p-6 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<h3 class="text-2xl font-bold text-white">GeForce RTX 4070</h3>
+<span class="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded font-bold border border-green-500/20">WINNER: EFFICIENCY</span>
+</div>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-3xl font-bold text-white">$549</span>
+<span class="text-sm text-text-secondary mb-1 line-through">$599</span>
+<span class="text-sm text-green-400 mb-1 ml-auto">9.2/10 Rating</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative overflow-hidden rounded-xl bg-surface-dark border border-border-dark hover:border-red-500/50 transition-all duration-300">
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent z-10"></div>
+<div class="h-64 bg-cover bg-center flex items-center justify-center p-8" style="background-image: radial-gradient(circle at center, #192b33 0%, #101c22 100%);">
+<img alt="AMD Radeon RX 7800 XT GPU render" class="max-h-full object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500" data-alt="AMD Radeon RX 7800 XT Graphics Card" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdLfUlmUodNbjCS1DCKZneUJIZkB8QkraurKFPLOOQfBAn8PnOM5-kejY7ovIODrkUJyf0Jne1IF9H_123dF-3dkbXSwasEV-Q_epJfzNm53PDE4dFSTYD_6PJ5YjhBB0BiJHmaqwgfoBCyFeU_XIQU-JwlUaAgTzOTY09QTZB0KOfzjqlcIPCnsoLrrJktvIqvV_MG77YmD-gWkgSpp2rPG2nsvwK0pniU7NZRAfdJUuiaJOJc91S9UlQztay5XxpS-IK4Q3Ts2Wf"/>
+</div>
+<div class="relative z-20 p-6 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<h3 class="text-2xl font-bold text-white">Radeon RX 7800 XT</h3>
+<span class="bg-primary/20 text-primary text-xs px-2 py-1 rounded font-bold border border-primary/20">WINNER: VALUE</span>
+</div>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-3xl font-bold text-white">$499</span>
+<span class="text-sm text-text-secondary mb-1 line-through">$519</span>
+<span class="text-sm text-primary mb-1 ml-auto">9.0/10 Rating</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Technical Specs Table -->
+<div class="mb-12">
+<h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                Technical Specifications
+            </h2>
+<div class="overflow-hidden rounded-xl border border-border-dark bg-surface-dark shadow-xl">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-background-dark border-b border-border-dark">
+<th class="p-4 text-sm font-medium text-text-secondary uppercase tracking-wider w-1/3">Feature</th>
+<th class="p-4 text-sm font-medium text-green-500 uppercase tracking-wider w-1/3 border-l border-border-dark">RTX 4070</th>
+<th class="p-4 text-sm font-medium text-red-500 uppercase tracking-wider w-1/3 border-l border-border-dark">RX 7800 XT</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark text-slate-300">
+<tr class="hover:bg-white/5 transition-colors">
+<td class="p-4 font-medium text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary text-sm">memory</span> VRAM
+                            </td>
+<td class="p-4 border-l border-border-dark">12 GB GDDR6X</td>
+<td class="p-4 border-l border-border-dark text-green-400 font-bold bg-green-500/5">16 GB GDDR6 <span class="ml-2 text-xs opacity-70">Higher is better</span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="p-4 font-medium text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary text-sm">speed</span> Boost Clock
+                            </td>
+<td class="p-4 border-l border-border-dark text-green-400 font-bold bg-green-500/5">2475 MHz</td>
+<td class="p-4 border-l border-border-dark">2430 MHz</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="p-4 font-medium text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary text-sm">developer_board</span> Memory Bus
+                            </td>
+<td class="p-4 border-l border-border-dark">192-bit</td>
+<td class="p-4 border-l border-border-dark text-green-400 font-bold bg-green-500/5">256-bit</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="p-4 font-medium text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary text-sm">bolt</span> TDP (Power)
+                            </td>
+<td class="p-4 border-l border-border-dark text-green-400 font-bold bg-green-500/5">200 W <span class="ml-2 text-xs opacity-70">Lower is better</span></td>
+<td class="p-4 border-l border-border-dark">263 W</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="p-4 font-medium text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary text-sm">auto_awesome</span> Upscaling
+                            </td>
+<td class="p-4 border-l border-border-dark text-green-400 font-bold bg-green-500/5">DLSS 3.5 (AI Driven)</td>
+<td class="p-4 border-l border-border-dark">FSR 3.0 (Open Source)</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="p-4 font-medium text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary text-sm">attach_money</span> Current Price
+                            </td>
+<td class="p-4 border-l border-border-dark text-slate-300">$549</td>
+<td class="p-4 border-l border-border-dark text-green-400 font-bold bg-green-500/5">$499</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Performance Ratings & Analysis -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+<!-- Summary -->
+<div class="lg:col-span-1 flex flex-col gap-4">
+<h2 class="text-2xl font-bold text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">reviews</span>
+                    Verdict
+                </h2>
+<div class="bg-surface-dark border border-border-dark rounded-xl p-6 flex flex-col gap-4 h-full">
+<p class="text-slate-300 leading-relaxed">
+                        The <span class="text-white font-bold">RX 7800 XT</span> offers superior raw rasterization performance and more VRAM for a lower price, making it the value king for 1440p gaming.
+                    </p>
+<div class="h-px bg-border-dark w-full"></div>
+<p class="text-slate-300 leading-relaxed">
+                        However, the <span class="text-white font-bold">RTX 4070</span> consumes significantly less power, runs cooler, and offers superior Ray Tracing and DLSS features if you care about visual fidelity technologies.
+                    </p>
+<button class="mt-auto w-full py-3 bg-white text-background-dark font-bold rounded-lg hover:bg-slate-200 transition-colors">
+                        Read Full Review
+                    </button>
+</div>
+</div>
+<!-- Performance Bars -->
+<div class="lg:col-span-2">
+<h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">equalizer</span>
+                    Performance Benchmarks (1440p)
+                </h2>
+<div class="bg-surface-dark border border-border-dark rounded-xl p-6 flex flex-col gap-6">
+<!-- Benchmark Item 1 -->
+<div>
+<div class="flex justify-between mb-2 text-sm">
+<span class="text-white font-medium">Cyberpunk 2077 (Ultra)</span>
+<span class="text-text-secondary">Average FPS</span>
+</div>
+<div class="relative h-12 flex flex-col gap-1">
+<div class="flex items-center h-5 w-full bg-slate-800/50 rounded-sm overflow-hidden">
+<div class="h-full bg-green-600 flex items-center justify-end px-2 text-xs font-bold text-white" style="width: 72%">68 FPS</div>
+</div>
+<div class="flex items-center h-5 w-full bg-slate-800/50 rounded-sm overflow-hidden">
+<div class="h-full bg-red-600 flex items-center justify-end px-2 text-xs font-bold text-white" style="width: 78%">74 FPS</div>
+</div>
+</div>
+</div>
+<!-- Benchmark Item 2 -->
+<div>
+<div class="flex justify-between mb-2 text-sm">
+<span class="text-white font-medium">Call of Duty: MW3</span>
+<span class="text-text-secondary">Average FPS</span>
+</div>
+<div class="relative h-12 flex flex-col gap-1">
+<div class="flex items-center h-5 w-full bg-slate-800/50 rounded-sm overflow-hidden">
+<div class="h-full bg-green-600 flex items-center justify-end px-2 text-xs font-bold text-white" style="width: 85%">112 FPS</div>
+</div>
+<div class="flex items-center h-5 w-full bg-slate-800/50 rounded-sm overflow-hidden">
+<div class="h-full bg-red-600 flex items-center justify-end px-2 text-xs font-bold text-white" style="width: 92%">124 FPS</div>
+</div>
+</div>
+</div>
+<!-- Benchmark Item 3 -->
+<div>
+<div class="flex justify-between mb-2 text-sm">
+<span class="text-white font-medium">Blender Render (Classroom)</span>
+<span class="text-text-secondary">Time (Seconds - Lower is Better)</span>
+</div>
+<div class="relative h-12 flex flex-col gap-1">
+<div class="flex items-center h-5 w-full bg-slate-800/50 rounded-sm overflow-hidden">
+<div class="h-full bg-green-500 flex items-center justify-end px-2 text-xs font-bold text-background-dark" style="width: 40%">28s</div>
+</div>
+<div class="flex items-center h-5 w-full bg-slate-800/50 rounded-sm overflow-hidden">
+<div class="h-full bg-red-800/60 flex items-center justify-end px-2 text-xs font-bold text-white opacity-80" style="width: 65%">42s</div>
+</div>
+</div>
+</div>
+<div class="flex gap-4 mt-2 text-xs font-bold">
+<div class="flex items-center gap-2"><div class="size-3 bg-green-600 rounded-sm"></div> RTX 4070</div>
+<div class="flex items-center gap-2"><div class="size-3 bg-red-600 rounded-sm"></div> RX 7800 XT</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Price History Chart -->
+<div class="w-full">
+<h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">trending_down</span>
+                Price Trend History (Last 6 Months)
+            </h2>
+<div class="bg-surface-dark border border-border-dark rounded-xl p-6 relative overflow-hidden">
+<!-- Grid Lines -->
+<div class="absolute inset-0 z-0 opacity-10 flex flex-col justify-between pointer-events-none p-6 pb-12 pl-12">
+<div class="w-full h-px bg-white"></div>
+<div class="w-full h-px bg-white"></div>
+<div class="w-full h-px bg-white"></div>
+<div class="w-full h-px bg-white"></div>
+<div class="w-full h-px bg-white"></div>
+</div>
+<div class="relative z-10 flex items-end h-[300px] gap-2 md:gap-4 pl-8 pb-6 border-l border-b border-slate-600">
+<!-- Y Axis Labels -->
+<div class="absolute left-0 top-0 bottom-6 flex flex-col justify-between text-xs text-text-secondary w-8 text-right pr-2">
+<span>$700</span>
+<span>$650</span>
+<span>$600</span>
+<span>$550</span>
+<span>$500</span>
+</div>
+<!-- Chart Content Simulated with CSS -->
+<!-- This represents a simplified line chart using CSS clip-path or simple SVG for clean rendering -->
+<div class="w-full h-full relative">
+<!-- Line 1: RTX 4070 (Green) -->
+<svg class="absolute inset-0 w-full h-full overflow-visible" preserveaspectratio="none">
+<!-- Gradient Area -->
+<path d="M0,80 Q100,80 200,90 T400,120 T600,130 T800,140 L1200,140 L1200,300 L0,300 Z" fill="url(#gradientGreen)" opacity="0.2"></path>
+<!-- Stroke Line -->
+<path d="M0,80 Q100,80 200,90 T400,120 T600,130 T800,140 L1200,140" fill="none" stroke="#22c55e" stroke-width="3"></path>
+<!-- Line 2: RX 7800 XT (Red) -->
+<!-- Gradient Area -->
+<path d="M0,200 Q150,200 300,190 T600,180 T900,185 L1200,180 L1200,300 L0,300 Z" fill="url(#gradientRed)" opacity="0.2"></path>
+<!-- Stroke Line -->
+<path d="M0,200 Q150,200 300,190 T600,180 T900,185 L1200,180" fill="none" stroke="#ef4444" stroke-dasharray="5,5" stroke-width="3"></path>
+<defs>
+<lineargradient id="gradientGreen" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#22c55e;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#22c55e;stop-opacity:0"></stop>
+</lineargradient>
+<lineargradient id="gradientRed" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#ef4444;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#ef4444;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+<!-- Tooltip Point (Static for design) -->
+<circle cx="800" cy="140" fill="#101c22" r="6" stroke="#22c55e" stroke-width="3"></circle>
+</svg>
+<!-- Tooltip Overlay -->
+<div class="absolute left-[65%] top-[35%] bg-background-dark border border-border-dark p-3 rounded shadow-xl pointer-events-none transform -translate-y-full">
+<p class="text-xs text-text-secondary mb-1">Oct 12, 2023</p>
+<div class="flex items-center gap-2 mb-1">
+<div class="size-2 bg-green-500 rounded-full"></div>
+<span class="text-sm text-white font-bold">$549.99</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-2 bg-red-500 rounded-full"></div>
+<span class="text-sm text-white font-bold">$499.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- X Axis Labels -->
+<div class="flex justify-between text-xs text-text-secondary px-8 pt-2">
+<span>May</span>
+<span>Jun</span>
+<span>Jul</span>
+<span>Aug</span>
+<span>Sep</span>
+<span>Oct</span>
+</div>
+</div>
+</div>
+</main>
+</body></html>
