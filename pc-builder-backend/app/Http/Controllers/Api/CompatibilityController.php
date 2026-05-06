@@ -37,7 +37,19 @@ class CompatibilityController extends Controller
             if (!$componentId) continue;
 
             $component = Component::find($componentId);
-            if (!$component) continue;
+            // ✅ FIX: Trả error nếu component không tồn tại
+            if (!$component) {
+                return response()->json([
+                    'status' => 'success',
+                    'alerts' => [[
+                        'rule_code' => 'COMPONENT_NOT_FOUND',
+                        'type' => 'error',
+                        'message' => "Component '$categoryCode' (ID: $componentId) không tồn tại trong hệ thống",
+                        'detail' => null,
+                    ]],
+                    'passed' => false,
+                ]);
+            }
 
             $specData = is_array($component->specifications)
                 ? $component->specifications

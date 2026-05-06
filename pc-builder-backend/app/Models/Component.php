@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes; // Dùng cho chức năng Xóa mềm
-
+use Illuminate\Database\Eloquent\Factories\HasFactory; // <-- Thêm dòng này 1
 class Component extends Model
 {
+    use HasFactory;
     use SoftDeletes; // Kích hoạt xóa mềm (deleted_at)
 
     protected $table = 'components'; // Chỉ định đúng tên bảng

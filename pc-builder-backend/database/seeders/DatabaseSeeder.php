@@ -26,9 +26,9 @@ class DatabaseSeeder extends Seeder
                 'role' => 'admin',
             ]
         );
-        $this->call([   
-        // ... seeders khác
-        CompatibilityRuleSeeder::class,  // Thêm dòng này
-    ]);
+        $this->call([
+            CompatibilityRuleSeeder::class,
+            TestComponentSeeder::class,
+        ]);
     }
 }

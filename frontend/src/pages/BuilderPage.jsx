@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import PageHero from '../components/PageHero';
 import componentsData from '../mock/components.json';
+import { useCompatibilityCheck } from '../hooks/useCompatibilityCheck';
+import { getCpuSeries, getMainTier, isTierOk } from '../utils/validationRules';
 
 const slots = [
   { key: 'cpu', name: 'CPU', fullName: 'Processor', icon: 'CPU' },
@@ -13,7 +15,8 @@ const slots = [
 ];
 
 function BuilderPage() {
-  const [build, setBuild] = useState({
+  // ── Hook quản lý validation & health check ──────────────────────────────
+  const { build, setBuild, validationMessage, healthAlerts, addComponent, removeComponent } = useCompatibilityCheck({
     cpu: null,
     mainboard: null,
     ram: null,
@@ -22,6 +25,8 @@ function BuilderPage() {
     psu: null,
     case: null,
   });
+
+  // ── State cho modal selection ──────────────────────────────────────────────
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const [listItems, setListItems] = useState([]);
@@ -30,52 +35,7 @@ function BuilderPage() {
 
   const totalPrice = Object.values(build).reduce((sum, item) => (item ? sum + item.price : sum), 0);
 
-  // ── Helpers phân tích linh kiện ────────────────────────────────────────────
-  const getCpuSeries = (cpu) => {
-    if (!cpu) return null;
-    const fullName = `${cpu.brand} ${cpu.name}`.toLowerCase();
-    if (/core i9|i9[-\s]/i.test(fullName)) return 'i9';
-    if (/core i7|i7[-\s]/i.test(fullName)) return 'i7';
-    if (/core i5|i5[-\s]/i.test(fullName)) return 'i5';
-    if (/core i3|i3[-\s]/i.test(fullName)) return 'i3';
-    if (/ryzen 9/i.test(fullName)) return 'ryzen9';
-    if (/ryzen 7/i.test(fullName)) return 'ryzen7';
-    if (/ryzen 5/i.test(fullName)) return 'ryzen5';
-    if (/ryzen 3/i.test(fullName)) return 'ryzen3';
-    return null;
-  };
-
-  const getMainTier = (main) => {
-    if (!main) return null;
-    const name = main.name.toUpperCase();
-    if (/\bZ\d{3}/.test(name)) return 'Z';
-    if (/\bB\d{3}/.test(name)) return 'B';
-    if (/\bH\d{3}/.test(name)) return 'H';
-    if (/\bX\d{3}/.test(name)) return 'X';
-    if (/\bA\d{3}/.test(name)) return 'A';
-    return null;
-  };
-
-  const TIER_ALLOWED = {
-    i3:     ['H', 'B'],
-    i5:     ['H', 'B', 'Z'],
-    i7:     ['B', 'Z'],
-    i9:     ['Z'],
-    ryzen3: ['A'],
-    ryzen5: ['A', 'B', 'X'],
-    ryzen7: ['B', 'X'],
-    ryzen9: ['X'],
-  };
-
-  const isTierOk = (cpuSeries, tier) => {
-    if (!cpuSeries || !tier) return true;
-    return TIER_ALLOWED[cpuSeries]?.includes(tier) ?? true;
-  };
-
-  // Các socket Intel / AMD để phát hiện thương hiệu
-  const INTEL_SOCKETS = ['lga1851', 'lga1700', 'lga1200', 'lga1151', 'lga1150'];
-  const AMD_SOCKETS   = ['am5', 'am4', 'am3+', 'am3'];
-
+  // ── Mở modal chọn linh kiện & lọc dữ liệu ────────────────────────────────
   const openSelectionModal = async (categoryCode) => {
     setActiveCategory(categoryCode);
     setIsModalOpen(true);
@@ -119,115 +79,40 @@ function BuilderPage() {
     }
   };
 
+  // ── Xử lý thêm linh kiện với validation từ hook ──────────────────────────
   const handleSelectItem = (item) => {
-    const newBuild = { ...build, [activeCategory]: item };
+    // Sử dụng hook addComponent để kiểm tra và thêm component
+    const result = addComponent(item, activeCategory);
 
-    if (activeCategory === 'cpu' && build.mainboard) {
-      if (item.specifications.socket !== build.mainboard.specifications.socket) {
-        newBuild.mainboard = null;
-        newBuild.ram = null;
-        window.alert('Da go bo bo mach chu va RAM cu vi khong khop socket CPU moi.');
+    if (result === 'warning') {
+      // Nếu là warning, hỏi user xác nhận
+      const userConfirm = window.confirm(
+        `${validationMessage.message}\n\nBạn có chắc chắn muốn thêm linh kiện này không?`
+      );
+      if (userConfirm) {
+        // Cộng component dù có warning
+        const newBuild = { ...build, [activeCategory]: item };
+        setBuild(newBuild);
+        setIsModalOpen(false);
       }
+    } else if (result === true) {
+      // Thêm thành công
+      setIsModalOpen(false);
     }
-
-    setBuild(newBuild);
-    setIsModalOpen(false);
+    // Nếu result = false thì validation.message đã được set, component sẽ hiển thị message
   };
 
-  // ── Kiểm tra tính tương thích ─────────────────────────────────────────────
-  const healthAlerts = [];
-  let _aid = 0;
-  const addError = (text) => healthAlerts.push({ id: ++_aid, type: 'error',   text });
-  const addWarn  = (text) => healthAlerts.push({ id: ++_aid, type: 'warning', text });
-
-  // 1. CPU ↔ Mainboard: socket & brand
-  if (build.cpu && build.mainboard) {
-    const cpuSocket = build.cpu.specifications.socket;
-    const mbSocket  = build.mainboard.specifications.socket;
-    if (cpuSocket !== mbSocket) {
-      addError(`Socket CPU (${cpuSocket}) không khớp với Mainboard (${mbSocket}).`);
+  // ── Xử lý xóa linh kiện với confirmation ──────────────────────────────────
+  const handleRemoveComponent = (slotKey, componentName) => {
+    const userConfirm = window.confirm(
+      `Bạn có chắc chắn muốn loại bỏ ${componentName}?`
+    );
+    if (userConfirm) {
+      removeComponent(slotKey);
     }
-    const cpuIsIntel = INTEL_SOCKETS.includes(cpuSocket.toLowerCase());
-    const cpuIsAmd   = AMD_SOCKETS.includes(cpuSocket.toLowerCase());
-    const mbIsIntel  = INTEL_SOCKETS.includes(mbSocket.toLowerCase());
-    const mbIsAmd    = AMD_SOCKETS.includes(mbSocket.toLowerCase());
-    if (cpuIsIntel && mbIsAmd) addError('CPU Intel không tương thích với Mainboard AMD.');
-    if (cpuIsAmd && mbIsIntel) addError('CPU AMD không tương thích với Mainboard Intel.');
+  };
 
-    // Tier chipset
-    const cpuSeries = getCpuSeries(build.cpu);
-    const mbTier    = getMainTier(build.mainboard);
-    if (cpuSeries && mbTier && !isTierOk(cpuSeries, mbTier)) {
-      const tierLabel = {
-        i3: 'H hoặc B', i7: 'B hoặc Z', i9: 'Z',
-        ryzen3: 'A', ryzen7: 'B hoặc X', ryzen9: 'X',
-      };
-      const rec = tierLabel[cpuSeries];
-      if (rec) {
-        addWarn(`CPU ${build.cpu.name} nên ghép Mainboard dòng ${rec}. Mainboard dòng ${mbTier} không phù hợp.`);
-      }
-    }
-  }
-
-  // 2. Mainboard ↔ RAM: loại RAM
-  if (build.mainboard && build.ram) {
-    const mbRam  = build.mainboard.specifications.ram_type;
-    const ramType = build.ram.specifications.ram_type;
-    if (mbRam !== ramType) {
-      addError(`Mainboard chỉ hỗ trợ ${mbRam}, RAM đã chọn là ${ramType} — không tương thích.`);
-    }
-  }
-
-  // 3. Tản nhiệt ↔ CPU socket
-  if (build.cooler && build.cpu) {
-    const socketSupport = build.cooler.specifications.socket_support || [];
-    if (!socketSupport.includes(build.cpu.specifications.socket)) {
-      addError(`Tản nhiệt ${build.cooler.name} không hỗ trợ socket ${build.cpu.specifications.socket}.`);
-    }
-  }
-
-  // 4. CPU tầm thấp + VGA cao cấp → bottleneck
-  if (build.cpu && build.vga) {
-    const cpuSeries = getCpuSeries(build.cpu);
-    const isLowCpu  = ['i3', 'ryzen3'].includes(cpuSeries);
-    const gpuFullName = `${build.vga.brand} ${build.vga.name}`;
-    const isHighEndGpu = /rtx\s*(40[89]\d|4090|50[0-9]{2})|rx\s*(7[89][0-9]{2}|79\d{2})/i.test(gpuFullName);
-    if (isLowCpu && isHighEndGpu) {
-      addWarn(`CPU ${build.cpu.name} có thể gây nghẽn cổ chai (bottleneck) khi ghép với VGA ${build.vga.name} cao cấp.`);
-    }
-  }
-
-  // 5. PSU ↔ Tổng công suất hệ thống
-  if (build.psu) {
-    const totalTdp = 100 + (build.cpu?.specifications.tdp || 0) + (build.vga?.specifications.tdp || 0);
-    if (build.psu.specifications.wattage < totalTdp) {
-      addError(`Công suất nguồn (${build.psu.specifications.wattage}W) không đảm bảo yêu cầu. Tổng tải ước tính: ${totalTdp}W.`);
-    } else if (build.psu.specifications.wattage < totalTdp + 150) {
-      addWarn(`Công suất nguồn (${build.psu.specifications.wattage}W) khá sát tải. Khuyến nghị tối thiểu ${totalTdp + 150}W để an toàn.`);
-    }
-  }
-
-  // 6. Mainboard form factor ↔ Case
-  if (build.mainboard && build.case) {
-    const mbForm   = build.mainboard.specifications.form_factor;
-    const caseForm = build.case.specifications.form_factor;
-    const ORDER    = ['ATX', 'mATX', 'ITX'];
-    const mbIdx    = ORDER.indexOf(mbForm);
-    const caseIdx  = ORDER.indexOf(caseForm);
-    if (mbIdx !== -1 && caseIdx !== -1 && caseIdx > mbIdx) {
-      addError(`Kích thước Bo mạch chủ (${mbForm}) không lắp vừa Vỏ máy tính (${caseForm}).`);
-    }
-  }
-
-  // 7. VGA chiều dài ↔ Case
-  if (build.vga && build.case) {
-    const vgaLen = build.vga.specifications.length;
-    const maxLen = build.case.specifications.max_gpu_length;
-    if (vgaLen && maxLen && vgaLen > maxLen) {
-      addError(`Card màn hình quá dài (${vgaLen}mm) so với khoảng trống tối đa của Vỏ Case (${maxLen}mm).`);
-    }
-  }
-
+  // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <div className="page-stack">
       <PageHero
@@ -259,7 +144,7 @@ function BuilderPage() {
                     <button
                       type="button"
                       className="button button--ghost"
-                      onClick={() => setBuild({ ...build, [slot.key]: null })}
+                      onClick={() => handleRemoveComponent(slot.key, `${item.brand} ${item.name}`)}
                     >
                       Gỡ
                     </button>
@@ -342,6 +227,11 @@ function BuilderPage() {
             </div>
 
             <div className="modal-card__body">
+              {validationMessage && validationMessage.message && (
+                <div className={`alert ${validationMessage.severity === 'error' ? 'alert--danger' : 'alert--warn'}`} style={{ marginBottom: '1rem' }}>
+                  {validationMessage.message}
+                </div>
+              )}
               {isLoading ? <p className="empty-state">Đang tải dữ liệu...</p> : null}
               {!isLoading && loadError ? <p className="empty-state">{loadError}</p> : null}
               {!isLoading && !loadError && listItems.length === 0 ? (
