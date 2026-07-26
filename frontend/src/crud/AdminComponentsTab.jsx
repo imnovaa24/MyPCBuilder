@@ -25,7 +25,7 @@ const specsConfig = {
   ],
   2: [
     { key: 'socket', label: 'Socket CPU', type: 'text', placeholder: 'VD: LGA1700, AM5' },
-    { key: 'form_factor', label: 'Form Factor', type: 'select', options: [{ value: 'ATX', label: 'ATX' }, { value: 'Micro-ATX', label: 'Micro-ATX' }, { value: 'Mini-ITX', label: 'Mini-ITX' }] },
+    { key: 'form_factor', label: 'Form Factor', type: 'select', options: [{ value: 'E-ATX', label: 'E-ATX' }, { value: 'ATX', label: 'ATX' }, { value: 'Micro-ATX', label: 'Micro-ATX' }, { value: 'Mini-ITX', label: 'Mini-ITX' }] },
     { key: 'ram_type', label: 'Chuẩn RAM', type: 'select', options: [{ value: 'DDR4', label: 'DDR4' }, { value: 'DDR5', label: 'DDR5' }] },
     { key: 'ram_slots', label: 'Số khe RAM', type: 'number', placeholder: 'VD: 2, 4' },
   ],
@@ -52,7 +52,7 @@ const specsConfig = {
   ],
   6: [
     { key: 'supported_form_factors', label: 'Hỗ trợ Mainboard', type: 'multicheck', options: [
-      { value: 'ATX', label: 'ATX' }, { value: 'Micro-ATX', label: 'Micro-ATX' }, { value: 'Mini-ITX', label: 'Mini-ITX' },
+      { value: 'E-ATX', label: 'E-ATX' }, { value: 'ATX', label: 'ATX' }, { value: 'Micro-ATX', label: 'Micro-ATX' }, { value: 'Mini-ITX', label: 'Mini-ITX' },
     ]},
     { key: 'max_vga_length_mm', label: 'VGA dài tối đa (mm)', type: 'number', placeholder: 'VD: 320' },
     { key: 'max_cooler_height_mm', label: 'Tản nhiệt cao tối đa (mm)', type: 'number', placeholder: 'VD: 160' },
@@ -62,8 +62,9 @@ const specsConfig = {
       { value: 'Air Cooler', label: 'Air Cooler' }, { value: 'AIO Liquid', label: 'AIO Liquid' },
     ]},
     { key: 'supported_sockets', label: 'Socket hỗ trợ', type: 'multicheck', options: [
-      { value: 'LGA1700', label: 'LGA1700' }, { value: 'LGA1200', label: 'LGA1200' },
+      { value: 'LGA1851', label: 'LGA1851' }, { value: 'LGA1700', label: 'LGA1700' }, { value: 'LGA1200', label: 'LGA1200' },
       { value: 'AM4', label: 'AM4' }, { value: 'AM5', label: 'AM5' },
+      { value: 'sTR5', label: 'sTR5' }, { value: 'LGA4189', label: 'LGA4189' },
     ]},
     { key: 'height_mm', label: 'Chiều cao (mm)', type: 'number', placeholder: 'VD: 155' },
     { key: 'radiator_size_mm', label: 'Kích thước Radiator (mm)', type: 'number', placeholder: 'VD: 240, 360' },
@@ -85,6 +86,29 @@ const specsConfig = {
     { key: 'write_speed', label: 'Tốc độ ghi (MB/s)', type: 'number', placeholder: 'VD: 3000, 5000' },
   ],
 };
+
+function PriceRow({ data, onChange }) {
+  const labelStyle = { display: 'block', fontSize: '0.78rem', fontWeight: 600, color: theme.muted, marginBottom: 5, textTransform: 'uppercase', letterSpacing: '0.04em' };
+  const fmt = (v) => (v === '' || v === null || v === undefined ? '' : Number(v).toLocaleString('vi-VN') + ' đ');
+  return (
+    <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+      <div style={{ flex: 1, minWidth: 160 }}>
+        <label style={labelStyle}>Giá thấp nhất (đ)</label>
+        <input type="number" placeholder="VD: 3500000" value={data.min_price}
+          onChange={e => onChange({ min_price: e.target.value })} required
+          style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }} />
+        {data.min_price !== '' && <span style={{ fontSize: '0.72rem', color: theme.ok }}>{fmt(data.min_price)}</span>}
+      </div>
+      <div style={{ flex: 1, minWidth: 160 }}>
+        <label style={labelStyle}>Giá cao nhất (đ)</label>
+        <input type="number" placeholder="VD: 3700000" value={data.max_price}
+          onChange={e => onChange({ max_price: e.target.value })} required
+          style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }} />
+        {data.max_price !== '' && <span style={{ fontSize: '0.72rem', color: theme.warn }}>{fmt(data.max_price)}</span>}
+      </div>
+    </div>
+  );
+}
 
 function SpecFields({ config, specForm, setSpecForm }) {
   if (!config) return null;
@@ -114,7 +138,7 @@ function SpecFields({ config, specForm, setSpecForm }) {
                 style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }} />
             )}
             {field.type === 'select' && (
-              <select value={specForm[field.key] || (field.options[0]?.value || '')}
+              <select value={typeof specForm[field.key] === 'boolean' ? String(specForm[field.key]) : (specForm[field.key] || field.options[0]?.value || '')}
                 onChange={e => setSpecForm({ ...specForm, [field.key]: e.target.value })}
                 style={{ ...inputStyle, width: '100%', boxSizing: 'border-box' }}>
                 {field.options.map(opt => (<option key={opt.value} value={opt.value}>{opt.label}</option>))}
@@ -213,6 +237,12 @@ function AdminComponentsTab({ setActiveTab }) {
   const [editComponentImage, setEditComponentImage] = useState(null);
   const [editComponentImagePreview, setEditComponentImagePreview] = useState('');
   const [savingComponent, setSavingComponent] = useState(false);
+
+  // Bộ lọc danh sách
+  const [filterCategory, setFilterCategory] = useState('');
+  const [filterBrand, setFilterBrand] = useState('');
+  const [filterName, setFilterName] = useState('');
+  const [priceSort, setPriceSort] = useState('');
 
   const axiosPrivate = axios.create({
     baseURL: API_BASE,
@@ -348,6 +378,37 @@ function AdminComponentsTab({ setActiveTab }) {
     return cat ? cat.name : `ID: ${id}`;
   };
 
+  const hasActiveFilter = filterCategory || filterBrand || filterName || priceSort;
+
+  const clearFilters = () => {
+    setFilterCategory('');
+    setFilterBrand('');
+    setFilterName('');
+    setPriceSort('');
+  };
+
+  // Danh sách hãng khả dụng (theo loại đang lọc)
+  const availableBrands = [...new Set(
+    components
+      .filter(c => !filterCategory || String(c.category_id) === String(filterCategory))
+      .map(c => c.brand)
+      .filter(Boolean)
+  )].sort();
+
+  // Áp dụng lọc + sắp xếp giá
+  const filteredComponents = components
+    .filter(c => !filterCategory || String(c.category_id) === String(filterCategory))
+    .filter(c => !filterBrand || c.brand === filterBrand)
+    .filter(c => !filterName || (c.name || '').toLowerCase().includes(filterName.trim().toLowerCase()))
+    .slice()
+    .sort((a, b) => {
+      if (priceSort === 'asc') return Number(a.min_price) - Number(b.min_price);
+      if (priceSort === 'desc') return Number(b.min_price) - Number(a.min_price);
+      return 0;
+    });
+
+  const filterControlStyle = { ...inputStyle, width: '100%', boxSizing: 'border-box', padding: '7px 10px', fontSize: '0.82rem' };
+
   return (
     <>
       {/* Breadcrumb */}
@@ -364,25 +425,26 @@ function AdminComponentsTab({ setActiveTab }) {
           <h2 style={{ margin: 0, fontSize: '1.25rem' }}>Thêm Linh Kiện Mới</h2>
         </div>
         <form onSubmit={handleCreate}>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
-            <select value={formData.category_id} onChange={e => { setFormData({ ...formData, category_id: e.target.value }); setSpecForm({}); }} style={{ ...inputStyle, width: 160 }}>
-              {categories.map(cat => (<option key={cat.id} value={cat.id}>{cat.name}</option>))}
-            </select>
-            {(() => {
-              const catCode = categories.find(c => c.id === parseInt(formData.category_id))?.code;
-              const brands = brandOptions[catCode];
-              return brands ? (
-                <select value={formData.brand} onChange={e => setFormData({ ...formData, brand: e.target.value })} required style={{ ...inputStyle, flex: 1, minWidth: 140 }}>
-                  <option value="">-- Chọn hãng --</option>
-                  {brands.map(b => <option key={b} value={b}>{b}</option>)}
-                </select>
-              ) : (
-                <input type="text" placeholder="Thương hiệu" value={formData.brand} onChange={e => setFormData({ ...formData, brand: e.target.value })} required style={{ ...inputStyle, flex: 1, minWidth: 140 }} />
-              );
-            })()}
-            <input type="text" placeholder="Tên sản phẩm" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} required style={{ ...inputStyle, flex: 2, minWidth: 200 }} />
-            <input type="number" placeholder="Giá thấp" value={formData.min_price} onChange={e => setFormData({ ...formData, min_price: e.target.value })} required style={{ ...inputStyle, width: 130 }} />
-            <input type="number" placeholder="Giá cao" value={formData.max_price} onChange={e => setFormData({ ...formData, max_price: e.target.value })} required style={{ ...inputStyle, width: 130 }} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+              <select value={formData.category_id} onChange={e => { setFormData({ ...formData, category_id: e.target.value }); setSpecForm({}); }} style={{ ...inputStyle, width: 180 }}>
+                {categories.map(cat => (<option key={cat.id} value={cat.id}>{cat.name}</option>))}
+              </select>
+              {(() => {
+                const catCode = categories.find(c => c.id === parseInt(formData.category_id))?.code;
+                const brands = brandOptions[catCode];
+                return brands ? (
+                  <select value={formData.brand} onChange={e => setFormData({ ...formData, brand: e.target.value })} required style={{ ...inputStyle, flex: 1, minWidth: 140 }}>
+                    <option value="">-- Chọn hãng --</option>
+                    {brands.map(b => <option key={b} value={b}>{b}</option>)}
+                  </select>
+                ) : (
+                  <input type="text" placeholder="Thương hiệu" value={formData.brand} onChange={e => setFormData({ ...formData, brand: e.target.value })} required style={{ ...inputStyle, flex: 1, minWidth: 140 }} />
+                );
+              })()}
+              <input type="text" placeholder="Tên sản phẩm" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} required style={{ ...inputStyle, flex: 2, minWidth: 200 }} />
+            </div>
+            <PriceRow data={formData} onChange={(patch) => setFormData({ ...formData, ...patch })} />
           </div>
 
           <SpecFields config={specsConfig[parseInt(formData.category_id)]} specForm={specForm} setSpecForm={setSpecForm} />
@@ -407,7 +469,9 @@ function AdminComponentsTab({ setActiveTab }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
           <span className="material-symbols-outlined" style={{ color: theme.primary, fontSize: 22 }}>inventory_2</span>
           <h2 style={{ margin: 0, fontSize: '1.25rem' }}>Danh Sách Linh Kiện</h2>
-          <span style={{ marginLeft: 'auto', color: theme.muted, fontSize: '0.85rem' }}>{components.length} sản phẩm</span>
+          <span style={{ marginLeft: 'auto', color: theme.muted, fontSize: '0.85rem' }}>
+            {hasActiveFilter ? `${filteredComponents.length}/${components.length}` : components.length} sản phẩm
+          </span>
         </div>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -418,9 +482,58 @@ function AdminComponentsTab({ setActiveTab }) {
                 ))}
                 <th style={{ padding: '12px 14px', textAlign: 'center', color: theme.muted, fontSize: '0.8rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Thao tác</th>
               </tr>
+              {/* Hàng bộ lọc */}
+              <tr style={{ borderBottom: `1px solid ${theme.border}` }}>
+                <th style={{ padding: '8px 14px', verticalAlign: 'top' }}>
+                  <select value={filterCategory}
+                    onChange={e => { setFilterCategory(e.target.value); setFilterBrand(''); }}
+                    style={filterControlStyle}>
+                    <option value="">Tất cả loại</option>
+                    {categories.map(cat => (<option key={cat.id} value={cat.id}>{cat.name}</option>))}
+                  </select>
+                </th>
+                <th style={{ padding: '8px 14px', verticalAlign: 'top' }}>
+                  <select value={filterBrand}
+                    onChange={e => setFilterBrand(e.target.value)}
+                    style={filterControlStyle}>
+                    <option value="">Tất cả hãng</option>
+                    {availableBrands.map(b => (<option key={b} value={b}>{b}</option>))}
+                  </select>
+                </th>
+                <th style={{ padding: '8px 14px', verticalAlign: 'top' }}>
+                  <input type="text" placeholder="Tìm theo tên..." value={filterName}
+                    onChange={e => setFilterName(e.target.value)}
+                    style={filterControlStyle} />
+                </th>
+                <th style={{ padding: '8px 14px', verticalAlign: 'top' }}>
+                  <select value={priceSort}
+                    onChange={e => setPriceSort(e.target.value)}
+                    style={filterControlStyle}>
+                    <option value="">Mặc định</option>
+                    <option value="asc">Thấp → Cao</option>
+                    <option value="desc">Cao → Thấp</option>
+                  </select>
+                </th>
+                <th style={{ padding: '8px 14px', textAlign: 'center', verticalAlign: 'top' }}>
+                  {hasActiveFilter && (
+                    <button type="button" onClick={clearFilters}
+                      style={{ ...btnGhost, padding: '7px 12px', fontSize: '0.78rem', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                      <span className="material-symbols-outlined" style={{ fontSize: 15 }}>filter_alt_off</span>
+                      Xóa lọc
+                    </button>
+                  )}
+                </th>
+              </tr>
             </thead>
             <tbody>
-              {components.map((item) => (
+              {filteredComponents.length === 0 && (
+                <tr>
+                  <td colSpan={5} style={{ padding: '32px 14px', textAlign: 'center', color: theme.muted }}>
+                    Không có linh kiện nào khớp bộ lọc.
+                  </td>
+                </tr>
+              )}
+              {filteredComponents.map((item) => (
                 <tr key={item.id} style={{ borderBottom: `1px solid ${theme.border}` }}>
                   <td style={{ padding: '14px' }}>
                     <span style={{ background: 'rgba(19,164,236,0.12)', color: theme.primary, padding: '4px 10px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 600 }}>
@@ -479,25 +592,26 @@ function AdminComponentsTab({ setActiveTab }) {
             </div>
 
             <form onSubmit={handleUpdateComponent}>
-              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 <select value={editFormData.category_id} onChange={e => { setEditFormData({ ...editFormData, category_id: e.target.value }); setEditSpecForm({}); }} style={{ ...inputStyle, width: '100%' }}>
                   {categories.map(cat => (<option key={cat.id} value={cat.id}>{cat.name}</option>))}
                 </select>
-                {(() => {
-                  const catCode = categories.find(c => c.id === parseInt(editFormData.category_id))?.code;
-                  const brands = brandOptions[catCode];
-                  return brands ? (
-                    <select value={editFormData.brand} onChange={e => setEditFormData({ ...editFormData, brand: e.target.value })} required style={{ ...inputStyle, flex: 1, minWidth: 140 }}>
-                      <option value="">-- Chọn hãng --</option>
-                      {brands.map(b => <option key={b} value={b}>{b}</option>)}
-                    </select>
-                  ) : (
-                    <input type="text" placeholder="Thương hiệu" value={editFormData.brand} onChange={e => setEditFormData({ ...editFormData, brand: e.target.value })} required style={{ ...inputStyle, flex: 1, minWidth: 140 }} />
-                  );
-                })()}
-                <input type="text" placeholder="Tên sản phẩm" value={editFormData.name} onChange={e => setEditFormData({ ...editFormData, name: e.target.value })} required style={{ ...inputStyle, flex: 2, minWidth: 200 }} />
-                <input type="number" placeholder="Giá thấp" value={editFormData.min_price} onChange={e => setEditFormData({ ...editFormData, min_price: e.target.value })} required style={{ ...inputStyle, flex: 1, minWidth: 120 }} />
-                <input type="number" placeholder="Giá cao" value={editFormData.max_price} onChange={e => setEditFormData({ ...editFormData, max_price: e.target.value })} required style={{ ...inputStyle, flex: 1, minWidth: 120 }} />
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+                  {(() => {
+                    const catCode = categories.find(c => c.id === parseInt(editFormData.category_id))?.code;
+                    const brands = brandOptions[catCode];
+                    return brands ? (
+                      <select value={editFormData.brand} onChange={e => setEditFormData({ ...editFormData, brand: e.target.value })} required style={{ ...inputStyle, flex: 1, minWidth: 140 }}>
+                        <option value="">-- Chọn hãng --</option>
+                        {brands.map(b => <option key={b} value={b}>{b}</option>)}
+                      </select>
+                    ) : (
+                      <input type="text" placeholder="Thương hiệu" value={editFormData.brand} onChange={e => setEditFormData({ ...editFormData, brand: e.target.value })} required style={{ ...inputStyle, flex: 1, minWidth: 140 }} />
+                    );
+                  })()}
+                  <input type="text" placeholder="Tên sản phẩm" value={editFormData.name} onChange={e => setEditFormData({ ...editFormData, name: e.target.value })} required style={{ ...inputStyle, flex: 2, minWidth: 200 }} />
+                </div>
+                <PriceRow data={editFormData} onChange={(patch) => setEditFormData({ ...editFormData, ...patch })} />
               </div>
 
               <SpecFields config={specsConfig[parseInt(editFormData.category_id)]} specForm={editSpecForm} setSpecForm={setEditSpecForm} />

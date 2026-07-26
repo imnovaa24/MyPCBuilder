@@ -146,7 +146,6 @@ function PublicBuilderPage() {
   useEffect(() => {
     const selectedCount = Object.keys(build).length;
     if (selectedCount < 2) {
-      setHealthAlerts([]);
       return;
     }
 
@@ -176,6 +175,9 @@ function PublicBuilderPage() {
       })
       .finally(() => setCheckingHealth(false));
   }, [build, categories, displayCategories]);
+
+  // Khi < 2 linh kiện, không hiện cảnh báo — tránh gọi setState đồng bộ trong useEffect
+  const visibleAlerts = Object.keys(build).length < 2 ? [] : healthAlerts;
 
   const openModal = (category) => {
     setActiveCategory(category);
@@ -278,7 +280,7 @@ function PublicBuilderPage() {
 
   // Kiểm tra category nào đang có lỗi tương thích
   const getCategoryAlerts = (catCode) => {
-    return healthAlerts.filter(a => {
+    return visibleAlerts.filter(a => {
       const detail = (a.detail || '').toLowerCase();
       const code = (a.rule_code || '').toLowerCase();
       return detail.includes(catCode) || code.includes(catCode);
@@ -491,9 +493,9 @@ function PublicBuilderPage() {
               </h3>
               {checkingHealth ? (
                 <span className="material-symbols-outlined text-primary text-sm animate-spin">progress_activity</span>
-              ) : healthAlerts.length > 0 ? (
+              ) : visibleAlerts.length > 0 ? (
                 <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                  {healthAlerts.length} VẤN ĐỀ
+                  {visibleAlerts.length} VẤN ĐỀ
                 </span>
               ) : selectedCount >= 2 ? (
                 <span className="bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded">
@@ -507,13 +509,13 @@ function PublicBuilderPage() {
                   <span className="material-symbols-outlined">info</span>
                   <span className="text-sm">Chọn ít nhất 2 linh kiện để kiểm tra tương thích.</span>
                 </div>
-              ) : healthAlerts.length === 0 && !checkingHealth ? (
+              ) : visibleAlerts.length === 0 && !checkingHealth ? (
                 <div className="flex items-center gap-3 p-3 text-emerald-400">
                   <span className="material-symbols-outlined">check_circle</span>
                   <span className="text-sm font-medium">Tất cả linh kiện đều tương thích với nhau!</span>
                 </div>
               ) : (
-                healthAlerts.map((alert, idx) => (
+                visibleAlerts.map((alert, idx) => (
                   <div
                     key={idx}
                     className={`border-l-4 p-3 rounded-r-lg ${
@@ -606,6 +608,7 @@ function PublicBuilderPage() {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         categoryName={activeCategory?.name || ''}
+        categoryCode={activeCategory?._storageType?.toLowerCase() || activeCategory?.code || ''}
         components={componentsForCategory}
         onSelect={handleSelect}
       />

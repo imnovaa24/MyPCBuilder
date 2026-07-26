@@ -125,7 +125,8 @@ class CompatibilityController extends Controller
 
             // ===== RULE 3: VGA length <= Case max VGA length =====
             case 'RULE_VGA_CLEARANCE':
-                return $this->evalNumericCompare($specs, 'vga', 'length_mm', 'case', 'max_vga_length_mm', $operator, 'error');
+                // Clearance luôn là phép so sánh "<=" (không phụ thuộc operator trong config)
+                return $this->evalNumericCompare($specs, 'vga', 'length_mm', 'case', 'max_vga_length_mm', '<=', 'error');
 
             // ===== RULE 4: PSU wattage >= CPU TDP + VGA TDP + 100 =====
             case 'RULE_PSU_WATTAGE':
@@ -137,7 +138,7 @@ class CompatibilityController extends Controller
 
             // ===== RULE 6: Cooler height <= Case max cooler height =====
             case 'RULE_COOLER_CLEARANCE':
-                return $this->evalNumericCompare($specs, 'cooler', 'height_mm', 'case', 'max_cooler_height_mm', $operator, 'error');
+                return $this->evalNumericCompare($specs, 'cooler', 'height_mm', 'case', 'max_cooler_height_mm', '<=', 'error');
 
             // ===== RULE 7: Bottleneck warning (tier difference) =====
             case 'RULE_BOTTLENECK_WARNING':

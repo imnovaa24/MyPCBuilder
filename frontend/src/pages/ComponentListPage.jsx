@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -46,15 +46,55 @@ const SPEC_LABELS = {
   interface: 'Giao tiếp',
 };
 
+// Các thông số dạng phân loại (enum) sẽ tự sinh dropdown lọc theo danh mục
+const CATEGORICAL_SPEC_KEYS = [
+  'socket',
+  'ram_type',
+  'type',
+  'efficiency',
+  'form_factor',
+  'interface',
+  'has_igpu',
+];
+
+const SORT_OPTIONS = [
+  { value: 'price_asc', label: 'Giá: Thấp → Cao' },
+  { value: 'price_desc', label: 'Giá: Cao → Thấp' },
+  { value: 'name_asc', label: 'Tên: A → Z' },
+  { value: 'name_desc', label: 'Tên: Z → A' },
+];
+
+const emptyFilters = {
+  search: '',
+  brand: '',
+  priceMin: '',
+  priceMax: '',
+  sort: 'price_asc',
+  specs: {},
+};
+
+const formatSpecValue = (key, val) => {
+  if (key === 'has_igpu') return val === true || val === 'true' ? 'Có' : 'Không';
+  if (typeof val === 'boolean') return val ? 'Có' : 'Không';
+  return String(val);
+};
+
+const inputClass =
+  'w-full h-10 px-3 rounded-lg bg-[#111c22] border border-border-dark text-white text-sm focus:border-primary outline-none transition-colors';
+const labelClass =
+  'text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5 block';
+
 function ComponentListPage() {
   const { categoryCode } = useParams();
   const [category, setCategory] = useState(null);
   const [components, setComponents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState(null);
+  const [filters, setFilters] = useState(emptyFilters);
 
   useEffect(() => {
     setLoading(true);
+    setFilters(emptyFilters);
     Promise.all([
       axios.get(`${API_BASE}/categories`),
       axios.get(`${API_BASE}/components`),
@@ -66,6 +106,8 @@ function ComponentListPage() {
         setCategory(matchedCat || null);
         if (matchedCat) {
           setComponents(comps.filter((c) => c.category_id === matchedCat.id));
+        } else {
+          setComponents([]);
         }
       })
       .catch((err) => console.error('Lỗi tải dữ liệu:', err))
@@ -80,6 +122,90 @@ function ComponentListPage() {
   const toggleExpand = (id) => {
     setExpandedId(expandedId === id ? null : id);
   };
+
+  // Danh sách thương hiệu có trong danh mục hiện tại
+  const brands = useMemo(() => {
+    const set = new Set();
+    components.forEach((c) => c.brand && set.add(c.brand));
+    return [...set].sort();
+  }, [components]);
+
+  // Bộ lọc thông số động — tự sinh theo dữ liệu thực tế của danh mục
+  const specFilters = useMemo(() => {
+    const result = [];
+    for (const key of CATEGORICAL_SPEC_KEYS) {
+      const valuesSet = new Set();
+      components.forEach((c) => {
+        const specs = parseSpecs(c.specifications);
+        const v = specs[key];
+        if (v !== undefined && v !== null && v !== '' && !Array.isArray(v)) {
+          valuesSet.add(String(v));
+        }
+      });
+      if (valuesSet.size >= 2) {
+        result.push({ key, values: [...valuesSet].sort() });
+      }
+    }
+    return result;
+  }, [components]);
+
+  // Áp dụng toàn bộ bộ lọc + sắp xếp
+  const filtered = useMemo(() => {
+    let list = [...components];
+
+    const q = filters.search.trim().toLowerCase();
+    if (q) {
+      list = list.filter((c) => `${c.brand} ${c.name}`.toLowerCase().includes(q));
+    }
+
+    if (filters.brand) {
+      list = list.filter((c) => c.brand === filters.brand);
+    }
+
+    const min = Number(filters.priceMin) || 0;
+    const max = Number(filters.priceMax) || Infinity;
+    list = list.filter((c) => {
+      const price = Number(c.min_price);
+      return price >= min && price <= max;
+    });
+
+    for (const [key, val] of Object.entries(filters.specs)) {
+      if (val) {
+        list = list.filter((c) => String(parseSpecs(c.specifications)[key]) === val);
+      }
+    }
+
+    switch (filters.sort) {
+      case 'price_asc':
+        list.sort((a, b) => Number(a.min_price) - Number(b.min_price));
+        break;
+      case 'price_desc':
+        list.sort((a, b) => Number(b.min_price) - Number(a.min_price));
+        break;
+      case 'name_asc':
+        list.sort((a, b) => `${a.brand} ${a.name}`.localeCompare(`${b.brand} ${b.name}`));
+        break;
+      case 'name_desc':
+        list.sort((a, b) => `${b.brand} ${b.name}`.localeCompare(`${a.brand} ${a.name}`));
+        break;
+      default:
+        break;
+    }
+
+    return list;
+  }, [components, filters]);
+
+  const activeFilterCount =
+    (filters.search ? 1 : 0) +
+    (filters.brand ? 1 : 0) +
+    (filters.priceMin ? 1 : 0) +
+    (filters.priceMax ? 1 : 0) +
+    Object.values(filters.specs).filter(Boolean).length;
+
+  const resetFilters = () => setFilters(emptyFilters);
+
+  const updateSpecFilter = (key, value) =>
+    setFilters((prev) => ({ ...prev, specs: { ...prev.specs, [key]: value } }));
 
   return (
     <main className="flex flex-1 flex-col items-center px-4 py-8 lg:px-40">
@@ -103,10 +229,130 @@ function ComponentListPage() {
           <div>
             <h1 className="text-white text-3xl font-bold">{category?.name || categoryCode}</h1>
             <p className="text-slate-400 text-sm mt-1">
-              {components.length} sản phẩm có sẵn
+              {loading
+                ? 'Đang tải...'
+                : activeFilterCount > 0
+                ? `${filtered.length} / ${components.length} sản phẩm`
+                : `${components.length} sản phẩm có sẵn`}
             </p>
           </div>
         </div>
+
+        {/* Filter Panel */}
+        {!loading && components.length > 0 && (
+          <div className="rounded-xl bg-surface-dark border border-border-dark p-4 md:p-5 flex flex-col gap-4">
+            {/* Hàng 1: tìm kiếm, thương hiệu, giá, sắp xếp */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+              <div className="lg:col-span-2">
+                <label className={labelClass}>Tìm kiếm</label>
+                <div className="relative">
+                  <span className="material-symbols-outlined text-[18px] text-slate-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                    search
+                  </span>
+                  <input
+                    type="text"
+                    value={filters.search}
+                    onChange={(e) => setFilters((p) => ({ ...p, search: e.target.value }))}
+                    placeholder="Tên hoặc thương hiệu..."
+                    className={`${inputClass} pl-10`}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className={labelClass}>Thương hiệu</label>
+                <select
+                  value={filters.brand}
+                  onChange={(e) => setFilters((p) => ({ ...p, brand: e.target.value }))}
+                  className={inputClass}
+                >
+                  <option value="">Tất cả</option>
+                  {brands.map((b) => (
+                    <option key={b} value={b}>
+                      {b}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className={labelClass}>Giá từ (đ)</label>
+                <input
+                  type="number"
+                  min="0"
+                  value={filters.priceMin}
+                  onChange={(e) => setFilters((p) => ({ ...p, priceMin: e.target.value }))}
+                  placeholder="0"
+                  className={inputClass}
+                />
+              </div>
+
+              <div>
+                <label className={labelClass}>Giá đến (đ)</label>
+                <input
+                  type="number"
+                  min="0"
+                  value={filters.priceMax}
+                  onChange={(e) => setFilters((p) => ({ ...p, priceMax: e.target.value }))}
+                  placeholder="Không giới hạn"
+                  className={inputClass}
+                />
+              </div>
+            </div>
+
+            {/* Hàng 2: bộ lọc thông số động + sắp xếp */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {specFilters.map((sf) => (
+                <div key={sf.key}>
+                  <label className={labelClass}>{SPEC_LABELS[sf.key] || sf.key}</label>
+                  <select
+                    value={filters.specs[sf.key] || ''}
+                    onChange={(e) => updateSpecFilter(sf.key, e.target.value)}
+                    className={inputClass}
+                  >
+                    <option value="">Tất cả</option>
+                    {sf.values.map((v) => (
+                      <option key={v} value={v}>
+                        {formatSpecValue(sf.key, v)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ))}
+
+              <div>
+                <label className={labelClass}>Sắp xếp</label>
+                <select
+                  value={filters.sort}
+                  onChange={(e) => setFilters((p) => ({ ...p, sort: e.target.value }))}
+                  className={inputClass}
+                >
+                  {SORT_OPTIONS.map((o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Hàng 3: đếm kết quả + nút xóa lọc */}
+            {activeFilterCount > 0 && (
+              <div className="flex items-center justify-between pt-1 border-t border-border-dark">
+                <span className="text-sm text-slate-400 mt-3">
+                  Tìm thấy <span className="text-primary font-bold">{filtered.length}</span> kết quả
+                </span>
+                <button
+                  onClick={resetFilters}
+                  className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-slate-300 hover:text-primary transition-colors cursor-pointer bg-transparent border-none"
+                >
+                  <span className="material-symbols-outlined text-[18px]">filter_alt_off</span>
+                  Xóa bộ lọc ({activeFilterCount})
+                </button>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Content */}
         {loading ? (
@@ -119,9 +365,21 @@ function ComponentListPage() {
             <span className="material-symbols-outlined text-5xl block mb-3">inventory_2</span>
             <p>Chưa có linh kiện nào trong danh mục này.</p>
           </div>
+        ) : filtered.length === 0 ? (
+          <div className="text-center text-slate-400 py-20">
+            <span className="material-symbols-outlined text-5xl block mb-3">search_off</span>
+            <p>Không tìm thấy linh kiện nào khớp với bộ lọc.</p>
+            <button
+              onClick={resetFilters}
+              className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline cursor-pointer bg-transparent border-none"
+            >
+              <span className="material-symbols-outlined text-[18px]">filter_alt_off</span>
+              Xóa bộ lọc
+            </button>
+          </div>
         ) : (
           <div className="flex flex-col gap-4">
-            {components.map((comp) => {
+            {filtered.map((comp) => {
               const specs = parseSpecs(comp.specifications);
               const isExpanded = expandedId === comp.id;
               const imageUrl = comp.image_url?.startsWith('/storage/')

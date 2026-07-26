@@ -7,6 +7,7 @@ import FeaturedBuildsPage from './pages/FeaturedBuildsPage';
 import RegisterPage from './pages/RegisterPage';
 import CustomerLoginPage from './pages/CustomerLoginPage';
 import MyBuildsPage from './pages/MyBuildsPage';
+import RecommendBuildPage from './pages/RecommendBuildPage';
 import PublicLayout from './crud/PublicLayout';
 import Login from './crud/Login';
 import AdminPanel from './crud/AdminPanel';
@@ -26,6 +27,7 @@ function App() {
       {/* Trang công khai cho khách vãng lai */}
       <Route path="/" element={<PublicLayout><PublicHomePage /></PublicLayout>} />
       <Route path="/builder" element={<PublicLayout><PublicBuilderPage /></PublicLayout>} />
+      <Route path="/recommend-build" element={<PublicLayout><RecommendBuildPage /></PublicLayout>} />
       <Route path="/components/:categoryCode" element={<PublicLayout><ComponentListPage /></PublicLayout>} />
       <Route path="/featured-builds" element={<PublicLayout><FeaturedBuildsPage /></PublicLayout>} />
       

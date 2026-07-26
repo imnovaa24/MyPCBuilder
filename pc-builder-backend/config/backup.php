@@ -26,7 +26,6 @@ return [
                  * The list of directories and files that will be included in the backup.
                  */
                 'include' => [
-                    base_path(),
                     // storage_path(),  // Include if you use zero downtime deployments and don't follow symlinks
                 ],
 
@@ -90,7 +89,7 @@ return [
              * For a complete list of available customization options, see https://github.com/spatie/db-dumper
              */
             'databases' => [
-                env('DB_CONNECTION', 'mysql'),
+                env('DB_CONNECTION', 'mysql')
             ],
         ],
 

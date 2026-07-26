@@ -201,11 +201,15 @@ function PublicNavbar() {
         <nav className="hidden lg:flex items-center gap-8">
           <NavLink to="/" end className={({isActive}) => `text-sm font-medium leading-normal transition-colors no-underline ${isActive ? 'text-primary' : 'text-slate-300 hover:text-primary'}`}>Trang chủ</NavLink>
           {!isCustomer && (
-            <NavLink to="/builder" className={({isActive}) => `text-sm font-medium leading-normal transition-colors no-underline ${isActive ? 'text-primary' : 'text-slate-300 hover:text-primary'}`}>Xây dựng cấu hình</NavLink>
+            <>
+              <NavLink to="/builder" className={({isActive}) => `text-sm font-medium leading-normal transition-colors no-underline ${isActive ? 'text-primary' : 'text-slate-300 hover:text-primary'}`}>Xây dựng cấu hình</NavLink>
+              <NavLink to="/recommend-build" className={({isActive}) => `text-sm font-medium leading-normal transition-colors no-underline ${isActive ? 'text-primary' : 'text-slate-300 hover:text-primary'}`}>Xây dựng theo yêu cầu</NavLink>
+            </>
           )}
           {isCustomer && (
             <>
               <NavLink to="/builder" className={({isActive}) => `text-sm font-medium leading-normal transition-colors no-underline ${isActive ? 'text-primary' : 'text-slate-300 hover:text-primary'}`}>Xây dựng cấu hình</NavLink>
+              <NavLink to="/recommend-build" className={({isActive}) => `text-sm font-medium leading-normal transition-colors no-underline ${isActive ? 'text-primary' : 'text-slate-300 hover:text-primary'}`}>Xây dựng theo yêu cầu</NavLink>
               <NavLink to="/my-builds" className={({isActive}) => `text-sm font-medium leading-normal transition-colors no-underline ${isActive ? 'text-primary' : 'text-slate-300 hover:text-primary'}`}>Cấu hình của tôi</NavLink>
             </>
           )}

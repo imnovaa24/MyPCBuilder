@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\ComponentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompatibilityController;
 use App\Http\Controllers\Api\FeaturedBuildController;
+use App\Http\Controllers\Api\RecommendationController;
+use App\Http\Controllers\Api\CompatibilityRuleController;
 use App\Models\Category;
 use App\Models\SavedBuild;
 
@@ -18,6 +20,9 @@ Route::get('/components', [ComponentController::class, 'index']);
 
 // API Kiểm tra tương thích linh kiện (Mở cửa tự do)
 Route::post('/compatibility/check', [CompatibilityController::class, 'check']);
+
+// API Gợi ý cấu hình PC bằng LLM / rule-based engine
+Route::post('/recommendations', [RecommendationController::class, 'store']);
 
 // API Cấu hình nổi bật (Mở cửa tự do)
 Route::get('/featured-builds', [FeaturedBuildController::class, 'index']);
@@ -70,6 +75,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/managers', [AuthController::class, 'createManager']);
         Route::get('/managers', [AuthController::class, 'listManagers']);
         Route::delete('/managers/{id}', [AuthController::class, 'deleteManager']);
+
+        // ==========================================
+        // Quản lý Luật Tương Thích (Admin + Manager)
+        // ==========================================
+        Route::get('/compatibility-rules', [CompatibilityRuleController::class, 'index']);
+        Route::post('/compatibility-rules', [CompatibilityRuleController::class, 'store']);
+        Route::put('/compatibility-rules/{id}', [CompatibilityRuleController::class, 'update']);
+        Route::patch('/compatibility-rules/{id}/toggle', [CompatibilityRuleController::class, 'toggleActive']);
+        Route::delete('/compatibility-rules/{id}', [CompatibilityRuleController::class, 'destroy']);
     });
 
     // ==========================================
@@ -127,7 +141,3 @@ Route::get('/categories', function () {
         'data' => Category::all()
     ]);
 });
-Route::post('/compatibility/check', [
-    \App\Http\Controllers\Api\CompatibilityController::class,
-    'check'
-]);

@@ -13,6 +13,7 @@ class CompatibilityRuleSeeder extends Seeder {
                 'config' => json_encode(['type' => 'exact_match']),
                 'error_message' => 'Socket CPU và Mainboard không khớp!',
                 'is_active' => true,
+                'severity' => 'error',
             ],
             [
                 'rule_code' => 'RULE_RAM_TYPE_MATCH',
@@ -20,6 +21,7 @@ class CompatibilityRuleSeeder extends Seeder {
                 'config' => json_encode(['type' => 'array_contains']),
                 'error_message' => 'Chuẩn RAM không tương thích!',
                 'is_active' => true,
+                'severity' => 'error',
             ],
             [
                 'rule_code' => 'RULE_PSU_WATTAGE',
@@ -27,20 +29,23 @@ class CompatibilityRuleSeeder extends Seeder {
                 'config' => json_encode(['buffer' => 100]),
                 'error_message' => 'Công suất PSU không đủ!',
                 'is_active' => true,
+                'severity' => 'error',
             ],
             [
                 'rule_code' => 'RULE_VGA_CLEARANCE',
                 'description' => 'Kiểm tra GPU vừa vào Case',
-                'config' => json_encode(['type' => 'length_check']),
+                'config' => json_encode(['type' => 'length_check', 'operator' => '<=']),
                 'error_message' => 'GPU quá dài!',
                 'is_active' => true,
+                'severity' => 'error',
             ],
             [
                 'rule_code' => 'RULE_COOLER_CLEARANCE',
                 'description' => 'Kiểm tra Cooler vừa vào Case',
-                'config' => json_encode(['type' => 'height_check']),
+                'config' => json_encode(['type' => 'height_check', 'operator' => '<=']),
                 'error_message' => 'Cooler quá cao!',
                 'is_active' => true,
+                'severity' => 'error',
             ],
             [
                 'rule_code' => 'RULE_MB_FORM_FACTOR',
@@ -48,6 +53,7 @@ class CompatibilityRuleSeeder extends Seeder {
                 'config' => json_encode(['type' => 'array_contains']),
                 'error_message' => 'Form factor không tương thích!',
                 'is_active' => true,
+                'severity' => 'error',
             ],
             [
                 'rule_code' => 'RULE_BOTTLENECK_WARNING',
@@ -55,6 +61,7 @@ class CompatibilityRuleSeeder extends Seeder {
                 'config' => json_encode(['max_tier_difference' => 1]),
                 'error_message' => 'Cảnh báo: CPU và GPU chênh lệch hiệu năng!',
                 'is_active' => true,
+                'severity' => 'warning',
             ],
         ];
 

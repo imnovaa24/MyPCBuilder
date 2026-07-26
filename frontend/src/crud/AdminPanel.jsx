@@ -6,6 +6,7 @@ import AdminComponentsTab from './AdminComponentsTab';
 import AdminFeaturedTab from './AdminFeaturedTab';
 import AdminUsersTab from './AdminUsersTab';
 import AdminManagersTab from './AdminManagersTab';
+import AdminCompatibilityTab from './AdminCompatibilityTab';
 
 function AdminPanel({ onLogout }) {
   const currentRole = localStorage.getItem('adminRole') || 'manager';
@@ -25,6 +26,7 @@ function AdminPanel({ onLogout }) {
     { id: 'dashboard', label: 'Tổng quan', icon: 'dashboard' },
     { id: 'components', label: 'Linh Kiện', icon: 'inventory_2' },
     { id: 'featured', label: 'Cấu Hình Phổ Biến', icon: 'star' },
+    { id: 'compatibility', label: 'Luật Tương Thích', icon: 'rule' },
     { id: 'users', label: 'Tài Khoản User', icon: 'person' },
     ...(isAdmin ? [{ id: 'managers', label: 'Quản Lý Manager', icon: 'group' }] : []),
   ];
@@ -101,6 +103,7 @@ function AdminPanel({ onLogout }) {
             {activeTab === 'dashboard' && <AdminDashboard setActiveTab={setActiveTab} isAdmin={isAdmin} />}
             {activeTab === 'components' && <AdminComponentsTab setActiveTab={setActiveTab} />}
             {activeTab === 'featured' && <AdminFeaturedTab setActiveTab={setActiveTab} />}
+            {activeTab === 'compatibility' && <AdminCompatibilityTab setActiveTab={setActiveTab} />}
             {activeTab === 'users' && <AdminUsersTab setActiveTab={setActiveTab} />}
             {activeTab === 'managers' && isAdmin && <AdminManagersTab setActiveTab={setActiveTab} />}
           </div>

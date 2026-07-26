@@ -81,9 +81,39 @@ function PublicHomePage() {
                 <span className="mr-2 material-symbols-outlined text-[20px]">build</span>
                 <span>Bắt đầu Build</span>
               </Link>
+              <Link to="/recommend-build" className="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-surface-dark border border-primary/40 hover:border-primary text-white text-base font-bold transition-all no-underline">
+                <span className="mr-2 material-symbols-outlined text-[20px] text-primary">auto_awesome</span>
+                <span>Xây dựng theo yêu cầu</span>
+              </Link>
             </div>
           </div>
         </div>
+
+        {/* AI Recommend CTA */}
+        <Link
+          to="/recommend-build"
+          className="group relative overflow-hidden rounded-2xl border border-primary/30 bg-gradient-to-r from-[#15252e] via-surface-dark to-[#15252e] p-6 md:p-8 no-underline hover:border-primary transition-all"
+        >
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-5 md:gap-8">
+            <div className="flex items-center justify-center size-16 rounded-xl bg-primary/15 shrink-0">
+              <span className="material-symbols-outlined text-4xl text-primary">smart_toy</span>
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <h2 className="text-white text-2xl font-bold leading-tight">Xây dựng theo yêu cầu với AI</h2>
+                <span className="text-[10px] font-bold bg-primary/20 text-primary px-2 py-0.5 rounded uppercase tracking-wide">AI</span>
+              </div>
+              <p className="text-slate-300 text-sm md:text-base max-w-2xl">
+                Chọn ngân sách, mục đích và yêu cầu đặc biệt — hệ thống AI tự đề xuất bộ PC đầy đủ linh kiện,
+                đảm bảo tương thích và nằm trong ngân sách. Linh kiện lấy trực tiếp từ kho hàng.
+              </p>
+            </div>
+            <span className="flex items-center gap-2 text-primary font-bold text-sm whitespace-nowrap group-hover:gap-3 transition-all">
+              Thử ngay
+              <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
+            </span>
+          </div>
+        </Link>
 
         {/* Popular Configurations */}
         <div className="flex flex-col gap-6">

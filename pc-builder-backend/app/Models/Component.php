@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes; // Dùng cho chức năng Xóa mềm
-use Illuminate\Database\Eloquent\Factories\HasFactory; // <-- Thêm dòng này 1
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Category;
+
 class Component extends Model
 {
     use HasFactory;
@@ -21,4 +23,9 @@ class Component extends Model
     protected $casts = [
         'specifications' => 'array',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
